@@ -264,10 +264,12 @@ img { max-width: 100%; }
 .status::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
 .status.stock { color: var(--ok); }
 .status.arrivage { color: var(--info); }
+.status.precommande { color: var(--precommande, #6b3fb5); }
 .status.reserve { color: var(--warn); }
 .status.rupture { color: var(--danger); }
 .vehicle-card .status.stock { color: var(--card-ok, var(--ok)); }
 .vehicle-card .status.arrivage { color: var(--card-info, var(--info)); }
+.vehicle-card .status.precommande { color: var(--card-precommande, #6b3fb5); }
 .vehicle-card .status.reserve { color: var(--card-warn, var(--warn)); }
 .vehicle-card .status.rupture { color: var(--card-danger, var(--danger)); }
 .card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }

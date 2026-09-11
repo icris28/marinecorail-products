@@ -25,7 +25,7 @@ l'application à zéro (filtres, comparaison, fiche ouverte, marque).
 |---|---|---|
 | `brands.js` | `window.MC_BRANDS` – onglets, textes du bandeau, univers visuel ; `window.MC_FAMILIES` – familles de comparaison | nouvelle marque, retouche d'un thème |
 | `vehicles.js` | `window.MC_VEHICLES` – caractéristiques techniques issues des fiches BRP | nouveau modèle, masquage (`active: false`) |
-| `prices.js` | `window.MC_PRICES` – prix TTC en F CFP (entier, `null` = prix sur demande) | changement de prix |
+| `prices.js` | `window.MC_PRICES` – prix TTC en F CFP (entier, `null` = prix sur demande) | changement de prix — de préférence via le tableau Excel, voir ci-dessous |
 | `inventory.js` | `window.MC_INVENTORY` – statut de stock, quantité (interne), coloris | arrivage, vente, réservation |
 
 Le moteur (`app.js`) et la mise en page (`styles.css`) n'ont pas besoin d'être touchés
@@ -48,8 +48,24 @@ Dans `vehicles.js` : `"active": false`. Le modèle disparaît du catalogue et du
 
 ### Statuts de stock
 
-`stock` · `arrivage` · `reserve` · `rupture` (les anciens codes `arrival`, `reserved`, `out`
-restent acceptés).
+`stock` · `arrivage` · `precommande` · `reserve` · `rupture` (les anciens codes `arrival`,
+`reserved`, `out` restent acceptés).
+
+## Tarifs
+
+Les prix se saisissent dans `_sources/tarifs-marine-corail.xlsx`, onglet **Tarifs**,
+colonne « Prix TTC » (fond jaune) : une ligne par modèle, nombre entier en F CFP,
+case vide = « Prix sur demande ». Le fichier n'est pas publié (dossier `_sources/` ignoré
+par Git).
+
+Pour reporter les prix dans le catalogue :
+
+```
+python3 tools/maj-prix.py _sources/tarifs-marine-corail.xlsx
+```
+
+Le script réécrit `prices.js`, signale les identifiants inconnus et les modèles absents du
+tableau. Il ne touche à rien d'autre.
 
 ## Comparateur
 
@@ -83,6 +99,14 @@ barre supérieure s'il existe.
 
 Tant qu'aucun modèle n'est renseigné, l'onglet reste utilisable et affiche le message
 défini par `empty`.
+
+## Sources
+
+Les fiches techniques BRP (PDF) et les logos d'origine sont dans `_sources/`, ignoré par Git.
+Les visuels produit de `assets/images/` en sont extraits : ne pas les remplacer par des images
+générées. Les fiches 2027 fournies sont des versions basse définition (≈ 550 px de large) :
+si un visuel paraît trop doux sur la borne 21,5", demander à BRP les fiches haute définition
+ou les visuels du kit presse.
 
 ## Déploiement
 

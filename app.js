@@ -13,7 +13,7 @@
   const PRICES = window.MC_PRICES || window.PRICES || {};
   const INVENTORY = window.MC_INVENTORY || window.INVENTORY || {};
 
-  const STATUS_LABELS = { stock: "En stock", arrivage: "Arrivage", reserve: "Réservé", rupture: "Rupture" };
+  const STATUS_LABELS = { stock: "En stock", arrivage: "Arrivage", precommande: "Pré-commande", reserve: "Réservé", rupture: "Rupture" };
   // Compatibilité avec les anciens codes de statut (v0.1).
   const STATUS_ALIASES = { arrival: "arrivage", reserved: "reserve", out: "rupture" };
 
@@ -107,7 +107,7 @@
 
   /* ---------- Thèmes générés depuis brands.js ------------------------ */
   // Statuts par défaut selon la luminosité de l'univers.
-  const DARK_STATUS = { ok: "#4fd18a", info: "#6cb1ff", warn: "#f0b64a", danger: "#ff6b5b" };
+  const DARK_STATUS = { ok: "#4fd18a", info: "#6cb1ff", warn: "#f0b64a", danger: "#ff6b5b", precommande: "#c9a3ff" };
 
   function brandThemeCSS(b) {
     const ui = b.ui || {};
@@ -129,7 +129,7 @@
       ui.eyebrow ? `--eyebrow: ${ui.eyebrow}` : "",
       b.texture ? `--bg-texture: ${b.texture}` : "",
       b.dark ? "--shadow: 0 8px 28px rgba(0,0,0,.45)" : "",
-      status ? `--ok: ${status.ok}; --info: ${status.info}; --warn: ${status.warn}; --danger: ${status.danger}` : ""
+      status ? `--ok: ${status.ok}; --info: ${status.info}; --warn: ${status.warn}; --danger: ${status.danger}` + (status.precommande ? `; --precommande: ${status.precommande}` : "") : ""
     ].filter(Boolean).join("; ");
 
     const rules = [`body[data-brand="${b.id}"] { ${page}; }`];
@@ -146,7 +146,7 @@
       `--card-line: ${ui.line}`,
       `--card-visual: ${b.visual}`,
       b.dark ? `--card-btn: ${b.accent}; --card-btn-ink: ${b.accentInk}; --card-selected-ink: ${b.accentInk}` : "",
-      status ? `--card-ok: ${status.ok}; --card-info: ${status.info}; --card-warn: ${status.warn}; --card-danger: ${status.danger}` : ""
+      status ? `--card-ok: ${status.ok}; --card-info: ${status.info}; --card-warn: ${status.warn}; --card-danger: ${status.danger}` + (status.precommande ? `; --card-precommande: ${status.precommande}` : "") : ""
     ].filter(Boolean).join("; ");
 
     rules.push(`.vehicle-card.${b.id} { ${card}; }`);
