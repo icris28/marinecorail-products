@@ -1,12 +1,509 @@
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-let brand='all', compare=new Set();
-const statusLabels={stock:'En stock',arrival:'Arrivage',reserved:'Réservé',out:'Rupture'};
-function money(v){return v==null?'Prix à renseigner':new Intl.NumberFormat('fr-FR').format(v)+' F CFP TTC'}
-function card(v){const inv=INVENTORY[v.id]||{};return `<article class="vehicle-card ${v.brand}" data-id="${v.id}"><div class="vehicle-visual">${v.image?`<img src="${v.image}" alt="${v.model}">`:`<div class="placeholder">${v.brand==='sea-doo'?'SD':'CA'}</div>`}</div><div class="vehicle-body"><div class="vehicle-meta"><span>${v.brandLabel} · ${v.year}</span><span class="status ${inv.status}">${statusLabels[inv.status]||''}</span></div><div class="vehicle-title">${v.model}</div><div class="spec-chips">${v.summary.map(x=>`<span class="chip">${x}</span>`).join('')}</div><div class="vehicle-meta"><span>${v.category}</span><span>${inv.color||''}</span></div><div class="price">${money(PRICES[v.id])}</div><div class="card-actions"><button class="btn primary" data-detail="${v.id}">Caractéristiques</button><button class="btn secondary ${compare.has(v.id)?'selected':''}" data-compare="${v.id}">${compare.has(v.id)?'Sélectionné':'Comparer'}</button></div></div></article>`}
-function render(){const q=$('#search').value.toLowerCase(), st=$('#statusFilter').value; const rows=VEHICLES.filter(v=>{const inv=INVENTORY[v.id]||{};if(inv.active===false)return false;if(brand!=='all'&&v.brand!==brand)return false;if(st!=='all'&&inv.status!==st)return false;return !q||JSON.stringify(v).toLowerCase().includes(q)});$('#catalog').innerHTML=rows.map(card).join('')||'<p>Aucun modèle ne correspond.</p>';wire()}
-function wire(){$$('[data-detail]').forEach(b=>b.onclick=()=>openDetail(b.dataset.detail));$$('[data-compare]').forEach(b=>b.onclick=()=>toggleCompare(b.dataset.compare))}
-function openDetail(id){const v=VEHICLES.find(x=>x.id===id),inv=INVENTORY[id]||{};let specs='';for(const [sec,rows] of Object.entries(v.specs)){specs+=`<section class="spec-section"><h3>${sec}</h3><div class="spec-table">${Object.entries(rows).map(([k,val])=>`<div class="spec-row"><span>${k}</span><b>${val}</b></div>`).join('')}</div></section>`}$('#detailContent').innerHTML=`<div class="detail-head"><div>${v.image?`<img src="${v.image}">`:`<div class="vehicle-visual"><div class="placeholder">${v.brand==='sea-doo'?'SD':'CA'}</div></div>`}</div><div><span class="brand-badge ${v.brand}">${v.brandLabel}</span><h2 class="detail-title">${v.model}</h2><p>${v.year} · ${v.category}</p><p>${inv.color||''}</p><div class="detail-price">${money(PRICES[id])}</div><p class="status ${inv.status}">${statusLabels[inv.status]||''}</p></div></div>${specs}`;$('#detailDialog').showModal()}
-function toggleCompare(id){if(compare.has(id))compare.delete(id);else{if(compare.size>=3){alert('Vous pouvez comparer jusqu’à 3 modèles.');return}compare.add(id)}$('#compareCount').textContent=compare.size;render()}
-function flatten(v){const o={};for(const [s,rows] of Object.entries(v.specs))for(const [k,val] of Object.entries(rows))o[`${s} — ${k}`]=val;return o}
-function openCompare(){if(compare.size<2){alert('Sélectionnez au moins 2 modèles.');return}const vs=[...compare].map(id=>VEHICLES.find(v=>v.id===id));const flat=vs.map(flatten);const keys=[...new Set(flat.flatMap(o=>Object.keys(o)))];const rows=keys.map(k=>`<tr><td>${k}</td>${flat.map(o=>`<td>${o[k]??'—'}</td>`).join('')}</tr>`).join('');$('#compareContent').innerHTML=`<h2>Comparaison</h2><table class="compare-table"><thead><tr><th>Caractéristique</th>${vs.map(v=>`<th>${v.model}<br><small>${v.year}</small><br>${money(PRICES[v.id])}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`;$('#compareDialog').showModal()}
-$$('.brand-tab').forEach(b=>b.onclick=()=>{$$('.brand-tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');brand=b.dataset.brand;render()});$('#search').oninput=render;$('#statusFilter').onchange=render;$('#compareOpen').onclick=openCompare;$$('[data-close]').forEach(b=>b.onclick=()=>b.closest('dialog').close());render();
+/* =====================================================================
+   Marine Corail – Catalogue Sea-Doo / Can-Am
+   Moteur d'affichage v0.2
+   - Aucune donnée produit ici : tout vient de vehicles.js, prices.js,
+     inventory.js. Un ajout de véhicule ne nécessite aucune modification
+     de ce fichier.
+   ===================================================================== */
+(function () {
+  "use strict";
+
+  /* ---------- Données ------------------------------------------------ */
+  const VEHICLES = (window.MC_VEHICLES || window.VEHICLES || []).filter(v => v.active !== false);
+  const PRICES = window.MC_PRICES || window.PRICES || {};
+  const INVENTORY = window.MC_INVENTORY || window.INVENTORY || {};
+
+  const STATUS_LABELS = { stock: "En stock", arrivage: "Arrivage", reserve: "Réservé", rupture: "Rupture" };
+  // Compatibilité avec les anciens codes de statut (v0.1).
+  const STATUS_ALIASES = { arrival: "arrivage", reserved: "reserve", out: "rupture" };
+
+  const BRANDS = window.MC_BRANDS || [];
+  const FAMILY_LABELS = window.MC_FAMILIES || {};
+  const brandById = id => BRANDS.find(b => b.id === id) || BRANDS[0] || { id: "all", label: "Tous", ui: {} };
+
+  const MAX_COMPARE = 3;
+  const PRICE_NOTE = "Les prix affichés sont donnés à titre indicatif et n’ont pas de valeur contractuelle. Ils peuvent être modifiés à tout moment. Seuls les prix affichés en magasin par Marine Corail font foi.";
+
+  /* ---------- État ---------------------------------------------------- */
+  const state = {
+    brand: "all",
+    category: "all",
+    status: "all",
+    seats: "all",
+    query: "",
+    compare: [],          // ids, dans l'ordre de sélection
+    diffOnly: false
+  };
+
+  const params = new URLSearchParams(location.search);
+  document.body.dataset.mode = params.has("kiosk") ? "kiosk" : params.has("app") ? "app" : "web";
+
+  /* ---------- Utilitaires -------------------------------------------- */
+  const $ = (s, root = document) => root.querySelector(s);
+  const $$ = (s, root = document) => Array.from(root.querySelectorAll(s));
+
+  function esc(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  // 1495000 -> "1 495 000 F CFP"
+  function formatXPF(value) {
+    if (value == null || isNaN(value)) return null;
+    const grouped = Math.round(Number(value)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return grouped + " F CFP";
+  }
+  window.formatXPF = formatXPF;
+
+  function priceHTML(id, cls) {
+    const formatted = formatXPF(PRICES[id]);
+    return formatted
+      ? `<div class="${cls}">${esc(formatted)}<small>TTC</small></div>`
+      : `<div class="${cls} na">Prix sur demande</div>`;
+  }
+
+  function inventoryOf(id) {
+    const inv = INVENTORY[id] || {};
+    const status = STATUS_ALIASES[inv.status] || inv.status || "";
+    return { ...inv, status };
+  }
+
+  function statusHTML(id, extra = "") {
+    const { status } = inventoryOf(id);
+    if (!status || !STATUS_LABELS[status]) return "";
+    return `<span class="status ${esc(status)} ${extra}">${esc(STATUS_LABELS[status])}</span>`;
+  }
+
+  function vehicleById(id) { return VEHICLES.find(v => v.id === id); }
+
+  // Silhouette neutre par famille de produit, en attendant le visuel officiel.
+  const SHAPES = {
+    pwc: '<path d="M8 50 C 30 40, 60 30, 112 44 L 118 54 H 12 Z" fill="currentColor"/><path d="M56 40 l 14 -22 h 18 l 8 22" fill="currentColor" opacity=".6"/>',
+    atv: '<path d="M16 48 h 88 l -10 -18 h -68 z" fill="currentColor"/><circle cx="34" cy="54" r="11" fill="currentColor"/><circle cx="86" cy="54" r="11" fill="currentColor"/><path d="M40 30 l 12 -14 h 18 l 10 14" fill="currentColor" opacity=".6"/>',
+    rib: '<path d="M6 40 h 108 a 10 10 0 0 1 -6 16 H 14 a 10 10 0 0 1 -8 -16 z" fill="currentColor"/><path d="M30 40 v -12 h 46 v 12 z" fill="currentColor" opacity=".6"/><path d="M84 38 l 6 -16 h 8 l -4 16 z" fill="currentColor" opacity=".45"/>'
+  };
+  SHAPES.ssv = SHAPES.atv;
+
+  function placeholderHTML(v) {
+    const shape = SHAPES[v.family] || SHAPES.pwc;
+    return `<div class="placeholder" aria-hidden="true"><svg viewBox="0 0 120 72">${shape}</svg><small>Visuel à venir</small></div>`;
+  }
+
+  // Image officielle si présente, sinon placeholder de marque (sans erreur visible).
+  function visualHTML(v) {
+    if (!v.image) return placeholderHTML(v);
+    return `<img src="${esc(v.image)}" alt="${esc(v.brandLabel + " " + v.model)}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{innerHTML:this.dataset.fallback}).firstChild)" data-fallback="${esc(placeholderHTML(v))}">`;
+  }
+
+  let toastTimer = null;
+  function toast(message) {
+    const el = $("#toast");
+    el.textContent = message;
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.hidden = true; }, 3200);
+  }
+
+  /* ---------- Thèmes générés depuis brands.js ------------------------ */
+  // Statuts par défaut selon la luminosité de l'univers.
+  const DARK_STATUS = { ok: "#4fd18a", info: "#6cb1ff", warn: "#f0b64a", danger: "#ff6b5b" };
+
+  function brandThemeCSS(b) {
+    const ui = b.ui || {};
+    const status = b.status || (b.dark ? DARK_STATUS : null);
+    const page = [
+      `--bg: ${ui.bg}`,
+      `--bg-hero: ${ui.bgHero}`,
+      `--surface: ${ui.surface}`,
+      `--surface-2: ${ui.surface2}`,
+      `--ink: ${ui.ink}`,
+      `--muted: ${ui.muted}`,
+      `--line: ${ui.line}`,
+      `--accent: ${b.dark ? b.accent : ui.accent || ui.ink}`,
+      `--accent-ink: ${b.dark ? b.accentInk : ui.accentInk || ui.surface}`,
+      `--accent-soft: ${ui.accentSoft}`,
+      `--chip: ${ui.chip}`,
+      `--chip-ink: ${ui.chipInk}`,
+      `--focus: ${ui.focus}`,
+      ui.eyebrow ? `--eyebrow: ${ui.eyebrow}` : "",
+      b.texture ? `--bg-texture: ${b.texture}` : "",
+      b.dark ? "--shadow: 0 8px 28px rgba(0,0,0,.45)" : "",
+      status ? `--ok: ${status.ok}; --info: ${status.info}; --warn: ${status.warn}; --danger: ${status.danger}` : ""
+    ].filter(Boolean).join("; ");
+
+    const rules = [`body[data-brand="${b.id}"] { ${page}; }`];
+    if (b.id === "all") return rules.join("\n");
+
+    const card = [
+      `--card-accent: ${b.accent}`,
+      `--card-accent-ink: ${b.accentInk}`,
+      `--card-ink: ${ui.ink}`,
+      `--card-muted: ${ui.muted}`,
+      `--card-chip: ${ui.chip}`,
+      `--card-chip-ink: ${ui.chipInk}`,
+      `--card-surface: ${ui.surface}`,
+      `--card-line: ${ui.line}`,
+      `--card-visual: ${b.visual}`,
+      b.dark ? `--card-btn: ${b.accent}; --card-btn-ink: ${b.accentInk}; --card-selected-ink: ${b.accentInk}` : "",
+      status ? `--card-ok: ${status.ok}; --card-info: ${status.info}; --card-warn: ${status.warn}; --card-danger: ${status.danger}` : ""
+    ].filter(Boolean).join("; ");
+
+    rules.push(`.vehicle-card.${b.id} { ${card}; }`);
+    rules.push(`.dialog-shell.${b.id} { ${page}; ${card}; background: ${ui.surface}; color: ${ui.ink}; }`);
+    rules.push(`.cmp-visual.${b.id} { background: ${b.visual}; color: ${ui.muted}; }`);
+    const tab = b.tab || {};
+    rules.push(`.brand-tab[data-brand="${b.id}"].is-active { background: ${tab.bg || b.accent}; color: ${tab.ink || b.accentInk};` +
+      (tab.underline ? ` box-shadow: inset 0 -3px 0 ${tab.underline};` : "") + ` }`);
+    return rules.join("\n");
+  }
+
+  function injectBrandStyles() {
+    const style = document.createElement("style");
+    style.id = "mc-brand-themes";
+    style.textContent = BRANDS.map(brandThemeCSS).join("\n");
+    document.head.appendChild(style);
+  }
+
+  function buildBrandTabs() {
+    $("#brandTabs").innerHTML = BRANDS.map(b =>
+      `<button class="brand-tab ${b.id === state.brand ? "is-active" : ""}" type="button" data-brand="${esc(b.id)}" aria-pressed="${b.id === state.brand}">${esc(b.label)}</button>`
+    ).join("");
+    $$(".brand-tab").forEach(t => t.addEventListener("click", () => applyBrand(t.dataset.brand)));
+  }
+
+  /* ---------- Thème & bandeau ---------------------------------------- */
+  function applyBrand(brand) {
+    state.brand = brand;
+    document.body.dataset.brand = brand;
+    $$(".brand-tab").forEach(b => {
+      const active = b.dataset.brand === brand;
+      b.classList.toggle("is-active", active);
+      b.setAttribute("aria-pressed", String(active));
+    });
+    const meta = brandById(brand).hero || {};
+    $("#heroEyebrow").textContent = meta.eyebrow || "";
+    $("#heroTitle").textContent = meta.title || "";
+    $("#heroSub").textContent = meta.sub || "";
+    const themeMeta = $('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.content = (brandById(brand).ui || {}).bg || "#0b1f33";
+    state.category = "all";
+    buildCategoryFilters();
+    render();
+  }
+
+  /* ---------- Filtres générés depuis les données --------------------- */
+  function brandScoped() {
+    return VEHICLES.filter(v => state.brand === "all" || v.brand === state.brand);
+  }
+
+  function buildCategoryFilters() {
+    const cats = [...new Set(brandScoped().map(v => v.category).filter(Boolean))];
+    const row = $("#categoryFilters");
+    if (cats.length < 2) { row.innerHTML = ""; return; }
+    row.innerHTML = [`<button class="filter-chip ${state.category === "all" ? "is-active" : ""}" data-category="all" type="button">Toutes catégories</button>`]
+      .concat(cats.map(c => `<button class="filter-chip ${state.category === c ? "is-active" : ""}" data-category="${esc(c)}" type="button">${esc(c)}</button>`))
+      .join("");
+    $$("[data-category]", row).forEach(b => b.addEventListener("click", () => {
+      state.category = b.dataset.category;
+      $$("[data-category]", row).forEach(x => x.classList.toggle("is-active", x === b));
+      render();
+    }));
+  }
+
+  function buildSeatsFilter() {
+    const seats = [...new Set(VEHICLES.map(v => v.seats).filter(n => n != null))].sort((a, b) => a - b);
+    const sel = $("#seatsFilter");
+    sel.innerHTML = '<option value="all">Toutes</option>' +
+      seats.map(n => `<option value="${n}">${n} ${n > 1 ? "places" : "place"}</option>`).join("");
+    sel.closest(".select-box").hidden = seats.length < 2;
+  }
+
+  function matches(v) {
+    const inv = inventoryOf(v.id);
+    if (state.brand !== "all" && v.brand !== state.brand) return false;
+    if (state.category !== "all" && v.category !== state.category) return false;
+    if (state.status !== "all" && inv.status !== state.status) return false;
+    if (state.seats !== "all" && String(v.seats) !== state.seats) return false;
+    if (state.query) {
+      const hay = [v.brandLabel, v.model, v.year, v.category, inv.color, ...(v.highlights || [])]
+        .concat(Object.values(v.specs || {}).flatMap(sec => Object.values(sec)))
+        .join(" ").toLowerCase();
+      if (!hay.includes(state.query)) return false;
+    }
+    return true;
+  }
+
+  /* ---------- Cartes catalogue ---------------------------------------- */
+  function cardHTML(v) {
+    const inv = inventoryOf(v.id);
+    const selected = state.compare.includes(v.id);
+    const otherFamily = state.compare.length > 0 && vehicleById(state.compare[0]).family !== v.family;
+    const seats = v.seats != null ? ` · ${v.seats} ${v.seats > 1 ? "places" : "place"}` : "";
+    return `
+<article class="vehicle-card ${esc(v.brand)}" data-id="${esc(v.id)}">
+  <div class="vehicle-visual">${visualHTML(v)}</div>
+  <div class="vehicle-body">
+    <div class="vehicle-meta">
+      <span class="brand-badge">${esc(v.brandLabel)}</span>
+      ${statusHTML(v.id)}
+    </div>
+    <div class="vehicle-title">${esc(v.model)}</div>
+    <div class="vehicle-sub">${esc(v.year)} · ${esc(v.category)}${esc(seats)}</div>
+    <div class="spec-chips">${(v.highlights || []).map(h => `<span class="chip">${esc(h)}</span>`).join("")}</div>
+    ${inv.color ? `<div class="vehicle-sub">Coloris : ${esc(inv.color)}</div>` : ""}
+    <div class="price-row">${priceHTML(v.id, "price")}</div>
+    <div class="card-actions">
+      <button class="btn primary" type="button" data-detail="${esc(v.id)}">Voir la fiche</button>
+      <button class="btn secondary ${selected ? "selected" : ""} ${otherFamily && !selected ? "is-disabled" : ""}" type="button"
+              data-compare="${esc(v.id)}" aria-pressed="${selected}">${selected ? "✓ Sélectionné" : "Comparer"}</button>
+    </div>
+  </div>
+</article>`;
+  }
+
+  // Marque sans aucun modèle actif : message dédié plutôt que « aucun résultat ».
+  function emptyMessage() {
+    const b = brandById(state.brand);
+    const noneAtAll = state.brand !== "all" && !VEHICLES.some(v => v.brand === state.brand);
+    if (noneAtAll) return b.empty || `Aucun modèle ${b.label} n'est actuellement au catalogue.`;
+    return "Aucun modèle ne correspond à ces critères.";
+  }
+
+  function render() {
+    const rows = VEHICLES.filter(matches);
+    const catalog = $("#catalog");
+    catalog.innerHTML = rows.length
+      ? rows.map(cardHTML).join("")
+      : `<p class="empty">${esc(emptyMessage())}</p>`;
+    $("#resultCount").textContent = rows.length
+      ? `${rows.length} modèle${rows.length > 1 ? "s" : ""}`
+      : "";
+    $$("[data-detail]", catalog).forEach(b => b.addEventListener("click", () => openDetail(b.dataset.detail)));
+    $$("[data-compare]", catalog).forEach(b => b.addEventListener("click", () => toggleCompare(b.dataset.compare)));
+    renderTray();
+  }
+
+  /* ---------- Fiche détaillée ------------------------------------------ */
+  function openDetail(id) {
+    const v = vehicleById(id);
+    if (!v) return;
+    const inv = inventoryOf(id);
+    const selected = state.compare.includes(id);
+    const seats = v.seats != null ? ` · ${v.seats} ${v.seats > 1 ? "places" : "place"}` : "";
+
+    const sections = Object.entries(v.specs || {}).map(([title, rows]) => `
+<section class="spec-section">
+  <h3>${esc(title)}</h3>
+  <div class="spec-table">
+    ${Object.entries(rows).map(([k, val]) => `<div class="spec-row"><span>${esc(k)}</span><b>${esc(val)}</b></div>`).join("")}
+  </div>
+</section>`).join("");
+
+    $("#detailShell").className = `dialog-shell ${v.brand}`;
+    $("#detailContent").innerHTML = `
+<div class="detail-head">
+  <div class="detail-visual">${visualHTML(v)}</div>
+  <div>
+    <span class="brand-badge">${esc(v.brandLabel)}</span>
+    <h2 class="detail-title" id="detailTitle">${esc(v.model)}</h2>
+    <p class="detail-sub">${esc(v.year)} · ${esc(v.category)}${esc(seats)}</p>
+    ${inv.color ? `<p class="detail-color">Coloris : ${esc(inv.color)}</p>` : ""}
+    ${priceHTML(id, "detail-price")}
+    <div class="detail-status">${statusHTML(id)}</div>
+    <div class="detail-actions">
+      <button class="btn ${selected ? "selected" : "secondary"}" type="button" data-compare-detail="${esc(id)}">${selected ? "✓ Dans la comparaison" : "Ajouter à la comparaison"}</button>
+    </div>
+    <div class="detail-highlights">${(v.highlights || []).map(h => `<span class="chip">${esc(h)}</span>`).join("")}</div>
+  </div>
+</div>
+${sections}
+<p class="price-note inline">${PRICE_NOTE}</p>`;
+
+    $("[data-compare-detail]", $("#detailContent")).addEventListener("click", () => {
+      toggleCompare(id);
+      openDetail(id); // rafraîchit le bouton
+    });
+
+    const dlg = $("#detailDialog");
+    if (!dlg.open) dlg.showModal();
+    $(".dialog-shell", dlg).scrollTop = 0;
+  }
+
+  /* ---------- Sélection pour comparaison ------------------------------- */
+  function toggleCompare(id) {
+    const v = vehicleById(id);
+    if (!v) return;
+    const idx = state.compare.indexOf(id);
+    if (idx >= 0) {
+      state.compare.splice(idx, 1);
+    } else {
+      if (state.compare.length >= MAX_COMPARE) {
+        toast(`Vous pouvez comparer ${MAX_COMPARE} modèles au maximum. Retirez-en un pour continuer.`);
+        return;
+      }
+      const first = state.compare.length ? vehicleById(state.compare[0]) : null;
+      if (first && first.family !== v.family) {
+        toast(`Le comparateur ne mélange pas ${FAMILY_LABELS[first.family] || first.family} et ${FAMILY_LABELS[v.family] || v.family}. Videz la sélection pour comparer ce modèle.`);
+        return;
+      }
+      state.compare.push(id);
+    }
+    updateCompareUI();
+  }
+
+  function clearCompare() {
+    state.compare = [];
+    updateCompareUI();
+    if ($("#compareDialog").open) renderCompare();
+  }
+
+  function updateCompareUI() {
+    const n = state.compare.length;
+    $("#compareCount").textContent = n;
+    $("#compareOpen").classList.toggle("is-ready", n >= 2);
+    render();
+  }
+
+  function renderTray() {
+    const tray = $("#compareTray");
+    const n = state.compare.length;
+    tray.hidden = n === 0;
+    document.body.classList.toggle("has-tray", n > 0);
+    if (n === 0) return;
+    const items = state.compare.map(id => {
+      const v = vehicleById(id);
+      return `<span class="tray-item"><span class="dot" style="background:${esc(brandById(v.brand).accent || "currentColor")}"></span>${esc(v.model)} <button type="button" data-tray-remove="${esc(id)}" aria-label="Retirer ${esc(v.model)}">&times;</button></span>`;
+    });
+    for (let i = n; i < MAX_COMPARE; i++) items.push(`<span class="tray-slot">${i === n ? "Ajoutez un modèle" : "—"}</span>`);
+    $("#trayItems").innerHTML = items.join("");
+    $$("[data-tray-remove]", tray).forEach(b => b.addEventListener("click", () => toggleCompare(b.dataset.trayRemove)));
+    const cmp = $("#trayCompare");
+    cmp.disabled = n < 2;
+    cmp.classList.toggle("is-disabled", n < 2);
+    cmp.textContent = n < 2 ? "Comparer (2 min.)" : `Comparer ${n} modèles`;
+  }
+
+  /* ---------- Comparateur ----------------------------------------------- */
+  function openCompare() {
+    if (state.compare.length < 2) {
+      toast("Sélectionnez au moins 2 modèles à comparer.");
+      return;
+    }
+    renderCompare();
+    const dlg = $("#compareDialog");
+    if (!dlg.open) dlg.showModal();
+  }
+
+  // Normalisation pour détecter les valeurs identiques.
+  function norm(val) {
+    return val == null ? "" : String(val).trim().toLowerCase().replace(/\s+/g, " ");
+  }
+
+  function renderCompare() {
+    const vs = state.compare.map(vehicleById).filter(Boolean);
+    const box = $("#compareContent");
+    const shell = $(".compare-shell");
+    const brands = new Set(vs.map(v => v.brand));
+    shell.className = `dialog-shell compare-shell ${brands.size === 1 ? [...brands][0] : ""}`;
+
+    if (vs.length < 2) {
+      box.innerHTML = `<h2 id="compareTitle" class="visually-hidden">Comparaison</h2><p class="compare-empty">Sélectionnez au moins 2 modèles pour lancer une comparaison.</p>`;
+      return;
+    }
+
+    // Sections et lignes dans l'ordre d'apparition, sans doublons.
+    const sections = [];
+    const rowsBySection = new Map();
+    vs.forEach(v => {
+      Object.entries(v.specs || {}).forEach(([sec, rows]) => {
+        if (!rowsBySection.has(sec)) { sections.push(sec); rowsBySection.set(sec, []); }
+        const list = rowsBySection.get(sec);
+        Object.keys(rows).forEach(k => { if (!list.includes(k)) list.push(k); });
+      });
+    });
+
+    let hiddenCount = 0;
+    const body = sections.map(sec => {
+      const lines = rowsBySection.get(sec).map(key => {
+        const values = vs.map(v => (v.specs && v.specs[sec]) ? v.specs[sec][key] : undefined);
+        const present = values.filter(x => x != null && x !== "");
+        const identical = present.length === values.length && new Set(values.map(norm)).size === 1;
+        if (state.diffOnly && (identical || present.length === 0)) { hiddenCount++; return ""; }
+        return `<tr class="${identical ? "" : "is-diff"}"><td>${esc(key)}</td>${values.map(x => x == null || x === "" ? `<td class="missing">Non renseigné</td>` : `<td>${esc(x)}</td>`).join("")}</tr>`;
+      }).filter(Boolean);
+      if (!lines.length) return "";
+      return `<tr class="section-row"><td colspan="${vs.length + 1}">${esc(sec)}</td></tr>${lines.join("")}`;
+    }).join("");
+
+    const head = vs.map(v => {
+      const seats = v.seats != null ? ` · ${v.seats} ${v.seats > 1 ? "pl." : "pl."}` : "";
+      return `<th scope="col">
+<div class="cmp-col">
+  <div class="cmp-visual ${esc(v.brand)}">${visualHTML(v)}</div>
+  <span class="cmp-sub">${esc(v.brandLabel)} · ${esc(v.year)}${esc(seats)}</span>
+  <span class="cmp-model">${esc(v.model)}</span>
+  ${priceHTML(v.id, "cmp-price")}
+  ${statusHTML(v.id)}
+  <button class="btn ghost small cmp-remove" type="button" data-cmp-remove="${esc(v.id)}">Retirer</button>
+</div></th>`;
+    }).join("");
+
+    box.innerHTML = `
+<div class="compare-head">
+  <h2 id="compareTitle">Comparaison</h2>
+  <div class="compare-tools">
+    <label class="switch"><input type="checkbox" id="diffOnly" ${state.diffOnly ? "checked" : ""}><span class="track"></span>Afficher uniquement les différences</label>
+    <button class="btn ghost small" type="button" id="cmpClear">Vider la comparaison</button>
+  </div>
+</div>
+<div class="compare-scroll">
+<table class="compare-table">
+  <thead><tr><th scope="col">Caractéristique</th>${head}</tr></thead>
+  <tbody>${body || `<tr><td colspan="${vs.length + 1}" class="compare-empty">Aucune différence entre ces modèles sur les caractéristiques renseignées.</td></tr>`}</tbody>
+</table>
+</div>
+${state.diffOnly && hiddenCount ? `<p class="compare-note">${hiddenCount} ligne${hiddenCount > 1 ? "s" : ""} identique${hiddenCount > 1 ? "s" : ""} masquée${hiddenCount > 1 ? "s" : ""}.</p>` : ""}
+<p class="price-note inline">${PRICE_NOTE}</p>`;
+
+    $("#diffOnly").addEventListener("change", e => { state.diffOnly = e.target.checked; renderCompare(); });
+    $("#cmpClear").addEventListener("click", () => { clearCompare(); $("#compareDialog").close(); });
+    $$("[data-cmp-remove]", box).forEach(b => b.addEventListener("click", () => {
+      toggleCompare(b.dataset.cmpRemove);
+      if (state.compare.length < 2) $("#compareDialog").close(); else renderCompare();
+    }));
+  }
+
+  /* ---------- Réinitialisation (utilisée aussi par le mode borne) ------- */
+  function resetAll() {
+    state.category = "all"; state.status = "all"; state.seats = "all"; state.query = "";
+    $("#search").value = ""; $("#statusFilter").value = "all"; $("#seatsFilter").value = "all";
+    $$("dialog[open]").forEach(d => d.close());
+    state.compare = [];
+    state.diffOnly = false;
+    applyBrand("all");
+    window.scrollTo({ top: 0 });
+  }
+  window.MC_RESET = resetAll;
+
+  /* ---------- Câblage ----------------------------------------------------- */
+  $("#search").addEventListener("input", e => { state.query = e.target.value.trim().toLowerCase(); render(); });
+  $("#statusFilter").addEventListener("change", e => { state.status = e.target.value; render(); });
+  $("#seatsFilter").addEventListener("change", e => { state.seats = e.target.value; render(); });
+  $("#resetFilters").addEventListener("click", () => {
+    state.category = "all"; state.status = "all"; state.seats = "all"; state.query = "";
+    $("#search").value = ""; $("#statusFilter").value = "all"; $("#seatsFilter").value = "all";
+    buildCategoryFilters(); render();
+  });
+  $("#compareOpen").addEventListener("click", openCompare);
+  $("#trayCompare").addEventListener("click", openCompare);
+  $("#trayClear").addEventListener("click", clearCompare);
+  $$("[data-close]").forEach(b => b.addEventListener("click", () => b.closest("dialog").close()));
+  // Fermeture en touchant le fond assombri.
+  $$("dialog").forEach(d => d.addEventListener("click", e => { if (e.target === d) d.close(); }));
+
+  injectBrandStyles();
+  buildBrandTabs();
+  buildSeatsFilter();
+  applyBrand("all");
+})();

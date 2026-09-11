@@ -1,34 +1,102 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Marine Corail - Sea-Doo & Can-Am</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marine Corail – Catalogue Sea-Doo, Can-Am & Highfield</title>
+<meta name="description" content="Caractéristiques techniques, prix indicatifs et comparateur des unités Sea-Doo, Can-Am et Highfield disponibles chez Marine Corail.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=001">
-<meta name="theme-color" content="#111111">
+<link rel="stylesheet" href="styles.css?v=003">
+<meta name="theme-color" content="#0b1f33">
 </head>
-<body>
+<body data-brand="all">
+
 <header class="topbar">
-  <div class="mc">MARINE CORAIL</div>
-  <nav class="brand-tabs">
-    <button class="brand-tab active" data-brand="all">Tous</button>
-    <button class="brand-tab sea" data-brand="sea-doo">Sea-Doo</button>
-    <button class="brand-tab can" data-brand="can-am">Can-Am</button>
-  </nav>
-  <button id="compareOpen" class="compare-pill">Comparer <span id="compareCount">0</span></button>
+  <a class="mc-mark" href="./" aria-label="Marine Corail – accueil du catalogue">
+    <img src="assets/logos/marine-corail.svg" alt="" class="mc-logo" onerror="this.remove()">
+    <span class="mc-text">MARINE CORAIL</span>
+  </a>
+
+  <!-- Onglets générés depuis brands.js -->
+  <nav class="brand-tabs" id="brandTabs" aria-label="Marque"></nav>
+
+  <label class="search-box">
+    <span class="visually-hidden">Rechercher un modèle</span>
+    <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <input id="search" type="search" placeholder="Rechercher un modèle…" autocomplete="off">
+  </label>
+
+  <button id="compareOpen" class="compare-pill" aria-haspopup="dialog" aria-controls="compareDialog">
+    Comparer <span id="compareCount" class="count" aria-label="modèles sélectionnés">0</span>
+  </button>
 </header>
+
 <main>
-<section class="hero">
-  <div><p class="eyebrow">CATALOGUE EN STOCK</p><h1>Sea-Doo & Can-Am</h1><p>Consultez les caractéristiques techniques, les prix indicatifs et comparez jusqu’à 3 unités.</p></div>
-</section>
-<section class="controls">
-<input id="search" type="search" placeholder="Rechercher un modèle, une année, une caractéristique…">
-<select id="statusFilter"><option value="all">Tous les statuts</option><option value="stock">En stock</option><option value="arrival">Arrivage</option><option value="reserved">Réservé</option><option value="out">Rupture</option></select>
-</section>
-<section id="catalog" class="catalog"></section>
-<section class="price-note">Les prix affichés sur cette page sont donnés à titre indicatif et n’ont pas de valeur contractuelle. Ils peuvent être modifiés à tout moment. Seuls les prix affichés en magasin par Marine Corail font foi.</section>
+  <section class="hero" id="hero">
+    <p class="eyebrow" id="heroEyebrow">Catalogue Marine Corail</p>
+    <h1 id="heroTitle">Sea-Doo &amp; Can-Am</h1>
+    <p class="hero-sub" id="heroSub">Caractéristiques techniques, prix indicatifs et comparaison jusqu’à 3 modèles.</p>
+  </section>
+
+  <section class="filters" aria-label="Filtres">
+    <div class="chip-row" id="categoryFilters" role="group" aria-label="Catégorie"></div>
+    <div class="select-row">
+      <label class="select-box">
+        <span>Statut</span>
+        <select id="statusFilter">
+          <option value="all">Tous</option>
+          <option value="stock">En stock</option>
+          <option value="arrivage">Arrivage</option>
+          <option value="reserve">Réservé</option>
+          <option value="rupture">Rupture</option>
+        </select>
+      </label>
+      <label class="select-box">
+        <span>Places</span>
+        <select id="seatsFilter"><option value="all">Toutes</option></select>
+      </label>
+      <button id="resetFilters" class="btn ghost" type="button">Réinitialiser</button>
+    </div>
+  </section>
+
+  <p class="result-count" id="resultCount" aria-live="polite"></p>
+
+  <section id="catalog" class="catalog" aria-live="polite"></section>
+
+  <p class="price-note">Les prix affichés sur cette page sont donnés à titre indicatif et n’ont pas de valeur contractuelle. Ils peuvent être modifiés à tout moment. Seuls les prix affichés en magasin par Marine Corail font foi.</p>
 </main>
-<dialog id="detailDialog" class="dialog"><div class="dialog-shell"><button class="close" data-close>×</button><div id="detailContent"></div></div></dialog>
-<dialog id="compareDialog" class="dialog wide"><div class="dialog-shell"><button class="close" data-close>×</button><div id="compareContent"></div></div></dialog>
-<script src="vehicles.js?v=001"></script><script src="prices.js?v=001"></script><script src="inventory.js?v=001"></script><script src="app.js?v=001"></script>
-</body></html>
+
+<!-- Barre de sélection pour la comparaison -->
+<div id="compareTray" class="compare-tray" hidden>
+  <div class="tray-items" id="trayItems"></div>
+  <div class="tray-actions">
+    <button id="trayClear" class="btn ghost" type="button">Vider</button>
+    <button id="trayCompare" class="btn primary" type="button">Comparer</button>
+  </div>
+</div>
+
+<!-- Fiche détaillée -->
+<dialog id="detailDialog" class="dialog" aria-labelledby="detailTitle">
+  <div class="dialog-shell" id="detailShell">
+    <button class="close" data-close type="button" aria-label="Fermer la fiche">&times;</button>
+    <div id="detailContent"></div>
+  </div>
+</dialog>
+
+<!-- Comparateur -->
+<dialog id="compareDialog" class="dialog wide" aria-labelledby="compareTitle">
+  <div class="dialog-shell compare-shell">
+    <button class="close" data-close type="button" aria-label="Fermer le comparateur">&times;</button>
+    <div id="compareContent"></div>
+  </div>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="brands.js?v=003"></script>
+<script src="vehicles.js?v=003"></script>
+<script src="prices.js?v=003"></script>
+<script src="inventory.js?v=003"></script>
+<script src="app.js?v=003"></script>
+</body>
+</html>

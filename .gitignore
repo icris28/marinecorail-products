@@ -1,0 +1,6 @@
+# Sources internes (fiches BRP, logos originaux) : non publiées sur GitHub Pages.
+_sources/
+
+# Fichiers déposés par Claude dans le dossier connecté
+Claude outputs/
+_to_delete/
