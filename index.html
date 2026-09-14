@@ -6,7 +6,7 @@
 <title>Marine Corail – Catalogue Sea-Doo, Can-Am & Highfield</title>
 <meta name="description" content="Caractéristiques techniques, prix indicatifs et comparateur des unités Sea-Doo, Can-Am et Highfield disponibles chez Marine Corail.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=004">
+<link rel="stylesheet" href="styles.css?v=005">
 <meta name="theme-color" content="#0b1f33">
 </head>
 <body data-brand="all">
@@ -76,28 +76,36 @@
   </div>
 </div>
 
-<!-- Fiche détaillée -->
-<dialog id="detailDialog" class="dialog" aria-labelledby="detailTitle">
-  <div class="dialog-shell" id="detailShell">
-    <button class="close" data-close type="button" aria-label="Fermer la fiche">&times;</button>
-    <div id="detailContent"></div>
+<!-- Fiche détaillée.
+     Panneau HTML classique plutôt que <dialog> : Safari n'accepte <dialog>
+     qu'à partir d'iPadOS 15.4, et la borne doit fonctionner sur tout matériel. -->
+<div id="detailDialog" class="modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-box">
+    <div class="dialog-shell" id="detailShell">
+      <button class="close" data-close type="button" aria-label="Fermer la fiche">&times;</button>
+      <div id="detailContent"></div>
+    </div>
   </div>
-</dialog>
+</div>
 
 <!-- Comparateur -->
-<dialog id="compareDialog" class="dialog wide" aria-labelledby="compareTitle">
-  <div class="dialog-shell compare-shell">
-    <button class="close" data-close type="button" aria-label="Fermer le comparateur">&times;</button>
-    <div id="compareContent"></div>
+<div id="compareDialog" class="modal wide" role="dialog" aria-modal="true" aria-labelledby="compareTitle" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-box">
+    <div class="dialog-shell compare-shell">
+      <button class="close" data-close type="button" aria-label="Fermer le comparateur">&times;</button>
+      <div id="compareContent"></div>
+    </div>
   </div>
-</dialog>
+</div>
 
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="brands.js?v=004"></script>
-<script src="vehicles.js?v=004"></script>
-<script src="prices.js?v=004"></script>
-<script src="inventory.js?v=004"></script>
-<script src="app.js?v=004"></script>
+<script src="brands.js?v=005"></script>
+<script src="vehicles.js?v=005"></script>
+<script src="prices.js?v=005"></script>
+<script src="inventory.js?v=005"></script>
+<script src="app.js?v=005"></script>
 </body>
 </html>

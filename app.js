@@ -96,6 +96,18 @@
     return `<img src="${esc(v.image)}" alt="${esc(v.brandLabel + " " + v.model)}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{innerHTML:this.dataset.fallback}).firstChild)" data-fallback="${esc(placeholderHTML(v))}">`;
   }
 
+  /* ---------- Panneaux modaux (sans <dialog>) ------------------------ */
+  function modalOpen(el) {
+    el.hidden = false;
+    document.body.classList.add("modal-open");
+    el.querySelector(".dialog-shell").scrollTop = 0;
+  }
+  function modalClose(el) {
+    el.hidden = true;
+    if (!$(".modal:not([hidden])")) document.body.classList.remove("modal-open");
+  }
+  function modalIsOpen(el) { return !el.hidden; }
+
   let toastTimer = null;
   function toast(message) {
     const el = $("#toast");
@@ -216,7 +228,9 @@
     const sel = $("#seatsFilter");
     sel.innerHTML = '<option value="all">Toutes</option>' +
       seats.map(n => `<option value="${n}">${n} ${n > 1 ? "places" : "place"}</option>`).join("");
-    sel.closest(".select-box").hidden = seats.length < 2;
+    const boite = sel.closest(".select-box");
+    boite.hidden = seats.length < 2;
+    boite.style.display = boite.hidden ? "none" : "";
   }
 
   function matches(v) {
@@ -325,9 +339,7 @@ ${sections}
       openDetail(id); // rafraîchit le bouton
     });
 
-    const dlg = $("#detailDialog");
-    if (!dlg.open) dlg.showModal();
-    $(".dialog-shell", dlg).scrollTop = 0;
+    modalOpen($("#detailDialog"));
   }
 
   /* ---------- Sélection pour comparaison ------------------------------- */
@@ -355,7 +367,7 @@ ${sections}
   function clearCompare() {
     state.compare = [];
     updateCompareUI();
-    if ($("#compareDialog").open) renderCompare();
+    if (modalIsOpen($("#compareDialog"))) renderCompare();
   }
 
   function updateCompareUI() {
@@ -365,12 +377,19 @@ ${sections}
     render();
   }
 
+  // La barre est en position fixe : on réserve exactement sa hauteur en bas
+  // de page, sinon elle recouvre les boutons de la dernière rangée de cartes.
+  function reserverPlaceBarre() {
+    const tray = $("#compareTray");
+    document.body.style.paddingBottom = tray.hidden ? "" : (tray.offsetHeight + 16) + "px";
+  }
+
   function renderTray() {
     const tray = $("#compareTray");
     const n = state.compare.length;
     tray.hidden = n === 0;
     document.body.classList.toggle("has-tray", n > 0);
-    if (n === 0) return;
+    if (n === 0) { reserverPlaceBarre(); return; }
     const items = state.compare.map(id => {
       const v = vehicleById(id);
       return `<span class="tray-item"><span class="dot" style="background:${esc(brandById(v.brand).accent || "currentColor")}"></span>${esc(v.model)} <button type="button" data-tray-remove="${esc(id)}" aria-label="Retirer ${esc(v.model)}">&times;</button></span>`;
@@ -382,6 +401,7 @@ ${sections}
     cmp.disabled = n < 2;
     cmp.classList.toggle("is-disabled", n < 2);
     cmp.textContent = n < 2 ? "Comparer (2 min.)" : `Comparer ${n} modèles`;
+    reserverPlaceBarre();
   }
 
   /* ---------- Comparateur ----------------------------------------------- */
@@ -391,8 +411,7 @@ ${sections}
       return;
     }
     renderCompare();
-    const dlg = $("#compareDialog");
-    if (!dlg.open) dlg.showModal();
+    modalOpen($("#compareDialog"));
   }
 
   // Normalisation pour détecter les valeurs identiques.
@@ -467,10 +486,10 @@ ${state.diffOnly && hiddenCount ? `<p class="compare-note">${hiddenCount} ligne$
 <p class="price-note inline">${PRICE_NOTE}</p>`;
 
     $("#diffOnly").addEventListener("change", e => { state.diffOnly = e.target.checked; renderCompare(); });
-    $("#cmpClear").addEventListener("click", () => { clearCompare(); $("#compareDialog").close(); });
+    $("#cmpClear").addEventListener("click", () => { clearCompare(); modalClose($("#compareDialog")); });
     $$("[data-cmp-remove]", box).forEach(b => b.addEventListener("click", () => {
       toggleCompare(b.dataset.cmpRemove);
-      if (state.compare.length < 2) $("#compareDialog").close(); else renderCompare();
+      if (state.compare.length < 2) modalClose($("#compareDialog")); else renderCompare();
     }));
   }
 
@@ -478,7 +497,7 @@ ${state.diffOnly && hiddenCount ? `<p class="compare-note">${hiddenCount} ligne$
   function resetAll() {
     state.category = "all"; state.status = "all"; state.seats = "all"; state.query = "";
     $("#search").value = ""; $("#statusFilter").value = "all"; $("#seatsFilter").value = "all";
-    $$("dialog[open]").forEach(d => d.close());
+    $$(".modal").forEach(modalClose);
     state.compare = [];
     state.diffOnly = false;
     applyBrand("all");
@@ -498,9 +517,17 @@ ${state.diffOnly && hiddenCount ? `<p class="compare-note">${hiddenCount} ligne$
   $("#compareOpen").addEventListener("click", openCompare);
   $("#trayCompare").addEventListener("click", openCompare);
   $("#trayClear").addEventListener("click", clearCompare);
-  $$("[data-close]").forEach(b => b.addEventListener("click", () => b.closest("dialog").close()));
-  // Fermeture en touchant le fond assombri.
-  $$("dialog").forEach(d => d.addEventListener("click", e => { if (e.target === d) d.close(); }));
+  // Fermeture : bouton de fermeture, fond assombri, touche Échap.
+  $$("[data-close]").forEach(b => b.addEventListener("click", () => modalClose(b.closest(".modal"))));
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" || e.key === "Esc") {
+      const ouvert = $(".modal:not([hidden])");
+      if (ouvert) modalClose(ouvert);
+    }
+  });
+
+  window.addEventListener("resize", reserverPlaceBarre);
+  window.addEventListener("orientationchange", () => setTimeout(reserverPlaceBarre, 250));
 
   injectBrandStyles();
   buildBrandTabs();
