@@ -92,7 +92,8 @@
   const SHAPES = {
     pwc: '<path d="M8 50 C 30 40, 60 30, 112 44 L 118 54 H 12 Z" fill="currentColor"/><path d="M56 40 l 14 -22 h 18 l 8 22" fill="currentColor" opacity=".6"/>',
     atv: '<path d="M16 48 h 88 l -10 -18 h -68 z" fill="currentColor"/><circle cx="34" cy="54" r="11" fill="currentColor"/><circle cx="86" cy="54" r="11" fill="currentColor"/><path d="M40 30 l 12 -14 h 18 l 10 14" fill="currentColor" opacity=".6"/>',
-    rib: '<path d="M6 40 h 108 a 10 10 0 0 1 -6 16 H 14 a 10 10 0 0 1 -8 -16 z" fill="currentColor"/><path d="M30 40 v -12 h 46 v 12 z" fill="currentColor" opacity=".6"/><path d="M84 38 l 6 -16 h 8 l -4 16 z" fill="currentColor" opacity=".45"/>'
+    rib: '<path d="M6 40 h 108 a 10 10 0 0 1 -6 16 H 14 a 10 10 0 0 1 -8 -16 z" fill="currentColor"/><path d="M30 40 v -12 h 46 v 12 z" fill="currentColor" opacity=".6"/><path d="M84 38 l 6 -16 h 8 l -4 16 z" fill="currentColor" opacity=".45"/>',
+    outboard: '<rect x="58" y="6" width="34" height="22" rx="8" fill="currentColor"/><path d="M58 14 L20 19 a4 4 0 0 0 0 8 L58 22 Z" fill="currentColor" opacity=".6"/><rect x="69" y="28" width="12" height="30" fill="currentColor" opacity=".6"/><path d="M64 58 h22 l-4 9 a13 13 0 0 1 -14 0 z" fill="currentColor" opacity=".45"/>'
   };
   SHAPES.ssv = SHAPES.atv;
 

@@ -3660,5 +3660,151 @@ window.MC_VEHICLES = [
         "· Taud de bateau": "En option"
       }
     }
+  },
+  {
+    "id": "epropulsion-elite",
+    "active": true,
+    "brand": "epropulsion",
+    "brandLabel": "ePropulsion",
+    "family": "outboard",
+    "model": "eLite",
+    "category": "eLite",
+    "image": null,
+    "highlights": [
+      "500 W (750 W en mode Sport)",
+      "Batterie intégrée 378 Wh",
+      "6,7 kg hors support",
+      "Idéal annexe et kayak"
+    ],
+    "specs": {
+      "Motorisation": {
+        "Puissance nominale": "500 W",
+        "Puissance max (mode Sport)": "750 W",
+        "Régime moteur": "1450 à 1800 tr/min",
+        "Refroidissement": "Par eau, naturel"
+      },
+      "Batterie": {
+        "Type": "Lithium-ion intégrée, non amovible",
+        "Capacité": "378 Wh (25,2 V)",
+        "Charge": "Secteur 220 V ; options chargeur 12 V et solaire"
+      },
+      "Performance": {
+        "Vitesse max (mode Sport)": "8,3 km/h",
+        "Vitesse max (pleine puissance)": "7,5 km/h",
+        "Autonomie à demi-puissance (250 W)": "9 km",
+        "Autonomie à pleine puissance (500 W)": "5,6 km"
+      },
+      "Dimensions / Poids": {
+        "Poids moteur (hors support)": "6,7 kg",
+        "Poids moteur (avec support)": "7,9 kg",
+        "Longueur d'arbre réglable": "282,5 - 401 mm",
+        "Dimensions (L x l x H)": "297 x 75 x 890 mm"
+      },
+      "Équipements de série": {
+        "· Écran numérique intégré": "Oui",
+        "· Sortie USB-C": "Oui",
+        "· Relevage et inclinaison réglables (8°/17°/26°, bascule 75°)": "Oui",
+        "· Relevage eaux peu profondes (36°)": "Oui",
+        "· Braquage ±70°": "Oui"
+      }
+    }
+  },
+  {
+    "id": "epropulsion-spirit-1-0-plus-extra-court",
+    "active": true,
+    "brand": "epropulsion",
+    "brandLabel": "ePropulsion",
+    "family": "outboard",
+    "model": "Spirit 1.0 Plus Extra Court",
+    "category": "Spirit 1.0 Plus",
+    "image": null,
+    "highlights": [
+      "1000 W (3 ch équivalent)",
+      "Batterie amovible 1276 Wh",
+      "Arbre extra-court : tableau 30 à 40 cm",
+      "Commande barre franche"
+    ],
+    "specs": {
+      "Motorisation": {
+        "Puissance": "1000 W (3 ch équivalent)",
+        "Tension d'entrée": "39 - 60 V",
+        "Moteur": "Brushless à entraînement direct",
+        "Vitesse max": "10 km/h (à 1000 W)",
+        "Rendement": "83 %"
+      },
+      "Batterie": {
+        "Modèle": "Spirit Battery Plus, 1276 Wh Li-ion polymère, flottante",
+        "Poids batterie": "8,7 kg",
+        "Charge": "8h30 en standard, 3h30 en rapide",
+        "Batterie externe": "Compatible (E-Series recommandée)"
+      },
+      "Hélice": {
+        "Diamètre": "280 mm",
+        "Pas": "148 mm",
+        "Pales": "2, composite"
+      },
+      "Dimensions / Poids": {
+        "Poids moteur (sans batterie)": "10,40 kg",
+        "Dimensions (L x l x H)": "880 x 273 x 1010 mm",
+        "Hauteur de tableau arrière recommandée": "30 à 40 cm (arbre extra-court)"
+      },
+      "Contrôles": {
+        "Commande": "Barre franche",
+        "Affichage": "Écran numérique",
+        "Coupe-circuit": "Magnétique",
+        "Démarrage": "Électrique",
+        "Inclinaison / relevage": "0° / 7° / 14° / 21°, bascule 70°"
+      }
+    }
+  },
+  {
+    "id": "epropulsion-spirit-1-0-evo-court",
+    "active": true,
+    "brand": "epropulsion",
+    "brandLabel": "ePropulsion",
+    "family": "outboard",
+    "model": "Spirit 1.0 Evo Court",
+    "category": "Spirit 1.0 Evo",
+    "image": null,
+    "highlights": [
+      "1000 W (3 ch équivalent)",
+      "Hydrogénération sous voile",
+      "Arbre court : tableau 40 à 50 cm",
+      "Application Bluetooth"
+    ],
+    "specs": {
+      "Motorisation": {
+        "Puissance": "1000 W (3 ch équivalent)",
+        "Tension nominale": "48 V (plage d'entrée 39 - 60 V)",
+        "Moteur": "Brushless à entraînement direct",
+        "Vitesse max": "10 km/h (à 1000 W)",
+        "Rendement": "83 %"
+      },
+      "Batterie": {
+        "Modèle": "Spirit Battery Plus, 1276 Wh Li-ion polymère (vendue séparément)",
+        "Poids batterie": "8,7 kg",
+        "Connectivité": "Application Bluetooth (batterie, vitesse, autonomie)"
+      },
+      "Hélice": {
+        "Diamètre": "280 mm",
+        "Pas": "148 mm",
+        "Pales": "2, composite"
+      },
+      "Dimensions / Poids": {
+        "Poids moteur (sans batterie)": "10,20 kg",
+        "Dimensions (L x l x H)": "550 x 457 x 1150 mm",
+        "Hauteur de tableau arrière recommandée": "40 à 50 cm (arbre court)"
+      },
+      "Contrôles": {
+        "Commande": "Evo Tiller, montage latéral ou supérieur en option",
+        "Coupe-circuit": "Magnétique",
+        "Inclinaison / relevage": "0° / 7° / 14° / 21°, bascule 85°"
+      },
+      "Équipements de série": {
+        "· Hydrogénération sous voile": "Oui",
+        "· Application Bluetooth (batterie, vitesse, autonomie)": "Oui",
+        "· Écran numérique": "Oui"
+      }
+    }
   }
 ];

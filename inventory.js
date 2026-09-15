@@ -1,6 +1,6 @@
 // Stock et variantes locales Marine Corail.
 // status : "stock" | "arrivage" | "precommande" | "commande" | "reserve" | "rupture"
-//   commande = référence au catalogue, fabriquée à la commande (gamme Highfield)
+//   commande = référence au catalogue, fabriquée/livrée à la commande (Highfield, ePropulsion)
 // quantity : information interne, non affichée publiquement.
 // color : couleur de l'unité présente en stock.
 
@@ -181,6 +181,15 @@ window.MC_INVENTORY = {
     "status": "commande"
   },
   "highfield-ultralite-340": {
+    "status": "commande"
+  },
+  "epropulsion-elite": {
+    "status": "commande"
+  },
+  "epropulsion-spirit-1-0-plus-extra-court": {
+    "status": "commande"
+  },
+  "epropulsion-spirit-1-0-evo-court": {
     "status": "commande"
   }
 };

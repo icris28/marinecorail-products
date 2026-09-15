@@ -6,6 +6,7 @@
 //   Sea-Doo        bleu #00A3E0, logotype noir
 //   Can-Am         jaune #FFC72C, rouge #E03C31, logotype noir (blanc sur fond sombre)
 //   Highfield      bleu pétrole #15496B, gris acier #9BA0A2
+//   ePropulsion    bleu #005DAB, logotype bleu sur fond transparent
 //   Marine Corail  rouge #CD0921, bleu #003087
 //
 // Champs :
@@ -33,7 +34,7 @@ window.MC_BRANDS = [
     tab: { bg: "#0f1419", ink: "#ffffff" },
     hero: {
       eyebrow: "Catalogue Marine Corail",
-      title: "Sea-Doo, Can-Am & Highfield",
+      title: "Sea-Doo, Can-Am, Highfield & ePropulsion",
       sub: "Caractéristiques techniques, prix indicatifs et comparaison jusqu’à 3 modèles."
     },
     visual: "linear-gradient(180deg, #f7f8fa 0%, #e8edf2 100%)",
@@ -150,6 +151,38 @@ window.MC_BRANDS = [
       focus: "#15496b",
       eyebrow: "#15496b"
     }
+  },
+
+  {
+    id: "epropulsion",
+    label: "ePropulsion",
+    dark: false,
+    accent: "#005dab",
+    accentInk: "#ffffff",
+    logo: "assets/logos/epropulsion.webp",
+    tab: { bg: "#005dab", ink: "#ffffff" },
+    hero: {
+      eyebrow: "Propulsion électrique",
+      title: "ePropulsion",
+      sub: "Hors-bords électriques pour annexes et petits voiliers : eLite et gamme Spirit 1.0."
+    },
+    empty: "Aucun moteur ePropulsion n’est actuellement au catalogue.",
+    visual: "linear-gradient(180deg, #ffffff 0%, #d7e6f3 100%)",
+    imageFit: "contain",
+    ui: {
+      bg: "#eef3f8",
+      bgHero: "linear-gradient(160deg, #ffffff 0%, #d7e6f3 55%, #b8d3ea 100%)",
+      surface: "#ffffff",
+      surface2: "#f2f6fa",
+      ink: "#0a2540",
+      muted: "#516177",
+      line: "#cfdce8",
+      accentSoft: "#dbe9f4",
+      chip: "#e3edf6",
+      chipInk: "#0a3d6b",
+      focus: "#005dab",
+      eyebrow: "#005dab"
+    }
   }
 ];
 
@@ -158,5 +191,6 @@ window.MC_FAMILIES = {
   pwc: "motomarines",
   atv: "quads",
   ssv: "SSV",
-  rib: "semi-rigides"
+  rib: "semi-rigides",
+  outboard: "moteurs électriques"
 };

@@ -73,8 +73,8 @@ tableau. Il ne touche à rien d'autre.
 - Les lignes sont regroupées par section et alignées sur les libellés identiques ;
   une valeur absente s'affiche « Non renseigné ».
 - Option « Afficher uniquement les différences ».
-- La comparaison se fait au sein d'une même famille (`family` : `pwc`, `atv`, `ssv`, `rib`)
-  pour éviter des tableaux sans rapport entre motomarines, quads et semi-rigides.
+- La comparaison se fait au sein d'une même famille (`family` : `pwc`, `atv`, `ssv`, `rib`, `outboard`)
+  pour éviter des tableaux sans rapport entre motomarines, quads, semi-rigides et moteurs.
 
 ## Marques et identité visuelle
 
@@ -83,9 +83,11 @@ une marque ne demande aucune modification de `index.html`, `styles.css` ou `app.
 Chaque entrée décrit l'onglet, le texte du bandeau, la couleur d'accent, le fond des visuels
 et les jetons d'interface (`ui`), avec `dark: true` pour un univers sombre.
 
-Marques actuelles : **Sea-Doo** (clair, nautique), **Can-Am** (sombre, off-road) et
-**Highfield** (clair, accent orange — palette provisoire à ajuster sur les logos officiels).
-Chaque carte et chaque fiche porte l'univers de sa marque, même dans la vue « Tous ».
+Marques actuelles : **Sea-Doo** (clair, bleu #00A3E0), **Can-Am** (sombre, jaune #FFC72C),
+**Highfield** (clair, bleu pétrole #15496B) et **ePropulsion** (clair, bleu #005DAB).
+Les couleurs sont relevées sur les logos officiels déposés dans `assets/logos/` (voir l'en-tête
+de `brands.js`), pas inventées. Chaque carte et chaque fiche porte l'univers de sa marque, même
+dans la vue « Tous ».
 
 Les logos vont dans `assets/logos/` ; `marine-corail.svg` est repris automatiquement dans la
 barre supérieure s'il existe.
@@ -102,11 +104,17 @@ défini par `empty`.
 
 ## Sources
 
-Les fiches techniques BRP (PDF) et les logos d'origine sont dans `_sources/`, ignoré par Git.
-Les visuels produit de `assets/images/` en sont extraits : ne pas les remplacer par des images
-générées. Les fiches 2027 fournies sont des versions basse définition (≈ 550 px de large) :
+Les fiches techniques BRP/Highfield (PDF) et les logos d'origine sont dans `_sources/`, ignoré
+par Git. Les visuels produit de `assets/images/` en sont extraits : ne pas les remplacer par des
+images générées. Les fiches 2027 fournies sont des versions basse définition (≈ 550 px de large) :
 si un visuel paraît trop doux sur la borne 21,5", demander à BRP les fiches haute définition
 ou les visuels du kit presse.
+
+Les 3 modèles ePropulsion (eLite, Spirit 1.0 Plus Extra Court, Spirit 1.0 Evo Court) n'ont pas
+de fiche PDF fournie : leurs caractéristiques viennent du site officiel epropulsion.com (fiche
+produit + base de pièces détachées). Aucune photo produit officielle n'a été récupérée — la
+carte affiche le pictogramme générique « moteur » (`SHAPES.outboard` dans `app.js`) tant qu'un
+visuel officiel n'est pas fourni.
 
 ## Déploiement
 

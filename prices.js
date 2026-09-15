@@ -58,5 +58,8 @@ window.MC_PRICES = {
   "highfield-ultralite-260": null,
   "highfield-ultralite-290": null,
   "highfield-ultralite-310": null,
-  "highfield-ultralite-340": null
+  "highfield-ultralite-340": null,
+  "epropulsion-elite": null,
+  "epropulsion-spirit-1-0-plus-extra-court": null,
+  "epropulsion-spirit-1-0-evo-court": null
 };
