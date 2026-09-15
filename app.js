@@ -13,7 +13,8 @@
   const PRICES = window.MC_PRICES || window.PRICES || {};
   const INVENTORY = window.MC_INVENTORY || window.INVENTORY || {};
 
-  const STATUS_LABELS = { stock: "En stock", arrivage: "Arrivage", precommande: "Pré-commande", reserve: "Réservé", rupture: "Rupture" };
+  const STATUS_LABELS = { stock: "En stock", arrivage: "Arrivage", precommande: "Pré-commande",
+                          commande: "Sur commande", reserve: "Réservé", rupture: "Rupture" };
   // Compatibilité avec les anciens codes de statut (v0.1).
   const STATUS_ALIASES = { arrival: "arrivage", reserved: "reserve", out: "rupture" };
 
@@ -76,6 +77,16 @@
   }
 
   function vehicleById(id) { return VEHICLES.find(v => v.id === id); }
+
+  // Ligne « année · catégorie · places ». L'année est facultative : les fiches
+  // Highfield ne portent pas de millésime, on n'en invente pas.
+  function metaLigne(v, court) {
+    const bouts = [];
+    if (v.year) bouts.push(String(v.year));
+    if (v.category) bouts.push(v.category);
+    if (v.seats != null) bouts.push(v.seats + (court ? " pl." : (v.seats > 1 ? " places" : " place")));
+    return bouts.join(" · ");
+  }
 
   // Silhouette neutre par famille de produit, en attendant le visuel officiel.
   const SHAPES = {
@@ -157,6 +168,8 @@
       `--card-surface: ${ui.surface}`,
       `--card-line: ${ui.line}`,
       `--card-visual: ${b.visual}`,
+      `--img-fit: ${b.imageFit || "contain"}`,
+      `--img-pad: ${b.imageFit === "cover" ? "0" : "18px"}`,
       b.dark ? `--card-btn: ${b.accent}; --card-btn-ink: ${b.accentInk}; --card-selected-ink: ${b.accentInk}` : "",
       status ? `--card-ok: ${status.ok}; --card-info: ${status.info}; --card-warn: ${status.warn}; --card-danger: ${status.danger}` + (status.precommande ? `; --card-precommande: ${status.precommande}` : "") : ""
     ].filter(Boolean).join("; ");
@@ -188,14 +201,27 @@
   function applyBrand(brand) {
     state.brand = brand;
     document.body.dataset.brand = brand;
+    // Sert au cartouche blanc du logo Marine Corail sur les univers sombres.
+    document.body.dataset.tone = brandById(brand).dark ? "dark" : "light";
     $$(".brand-tab").forEach(b => {
       const active = b.dataset.brand === brand;
       b.classList.toggle("is-active", active);
       b.setAttribute("aria-pressed", String(active));
     });
-    const meta = brandById(brand).hero || {};
+    const marque = brandById(brand);
+    const meta = marque.hero || {};
     $("#heroEyebrow").textContent = meta.eyebrow || "";
     $("#heroTitle").textContent = meta.title || "";
+    // Logotype officiel quand la marque en a un ; le titre reste dans le DOM
+    // pour les lecteurs d'écran et le référencement.
+    const logo = $("#heroLogo");
+    if (marque.logo) {
+      logo.src = marque.logo; logo.alt = meta.title || marque.label; logo.hidden = false;
+      $("#heroTitle").classList.add("visually-hidden");
+    } else {
+      logo.hidden = true; logo.removeAttribute("src");
+      $("#heroTitle").classList.remove("visually-hidden");
+    }
     $("#heroSub").textContent = meta.sub || "";
     const themeMeta = $('meta[name="theme-color"]');
     if (themeMeta) themeMeta.content = (brandById(brand).ui || {}).bg || "#0b1f33";
@@ -253,7 +279,6 @@
     const inv = inventoryOf(v.id);
     const selected = state.compare.includes(v.id);
     const otherFamily = state.compare.length > 0 && vehicleById(state.compare[0]).family !== v.family;
-    const seats = v.seats != null ? ` · ${v.seats} ${v.seats > 1 ? "places" : "place"}` : "";
     return `
 <article class="vehicle-card ${esc(v.brand)}" data-id="${esc(v.id)}">
   <div class="vehicle-visual">${visualHTML(v)}</div>
@@ -263,7 +288,7 @@
       ${statusHTML(v.id)}
     </div>
     <div class="vehicle-title">${esc(v.model)}</div>
-    <div class="vehicle-sub">${esc(v.year)} · ${esc(v.category)}${esc(seats)}</div>
+    <div class="vehicle-sub">${esc(metaLigne(v))}</div>
     <div class="spec-chips">${(v.highlights || []).map(h => `<span class="chip">${esc(h)}</span>`).join("")}</div>
     ${inv.color ? `<div class="vehicle-sub">Coloris : ${esc(inv.color)}</div>` : ""}
     <div class="price-row">${priceHTML(v.id, "price")}</div>
@@ -304,7 +329,6 @@
     if (!v) return;
     const inv = inventoryOf(id);
     const selected = state.compare.includes(id);
-    const seats = v.seats != null ? ` · ${v.seats} ${v.seats > 1 ? "places" : "place"}` : "";
 
     const sections = Object.entries(v.specs || {}).map(([title, rows]) => `
 <section class="spec-section">
@@ -321,7 +345,7 @@
   <div>
     <span class="brand-badge">${esc(v.brandLabel)}</span>
     <h2 class="detail-title" id="detailTitle">${esc(v.model)}</h2>
-    <p class="detail-sub">${esc(v.year)} · ${esc(v.category)}${esc(seats)}</p>
+    <p class="detail-sub">${esc(metaLigne(v))}</p>
     ${inv.color ? `<p class="detail-color">Coloris : ${esc(inv.color)}</p>` : ""}
     ${priceHTML(id, "detail-price")}
     <div class="detail-status">${statusHTML(id)}</div>
@@ -456,11 +480,10 @@ ${sections}
     }).join("");
 
     const head = vs.map(v => {
-      const seats = v.seats != null ? ` · ${v.seats} ${v.seats > 1 ? "pl." : "pl."}` : "";
       return `<th scope="col">
 <div class="cmp-col">
   <div class="cmp-visual ${esc(v.brand)}">${visualHTML(v)}</div>
-  <span class="cmp-sub">${esc(v.brandLabel)} · ${esc(v.year)}${esc(seats)}</span>
+  <span class="cmp-sub">${esc(v.brandLabel)} · ${esc(metaLigne(v, true))}</span>
   <span class="cmp-model">${esc(v.model)}</span>
   ${priceHTML(v.id, "cmp-price")}
   ${statusHTML(v.id)}

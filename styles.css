@@ -81,7 +81,12 @@ img { max-width: 100%; }
   font-weight: 800; letter-spacing: .12em; font-size: 12px;
   min-height: var(--tap);
 }
-.mc-logo { height: 30px; width: auto; }
+.mc-logo { height: 32px; width: auto; display: block; }
+/* Le logotype Marine Corail n'existe qu'en version couleur sur fond clair :
+   sur un univers sombre, on le pose sur un cartouche blanc. */
+body[data-tone="dark"] .mc-logo {
+  background: #fff; padding: 5px 9px; border-radius: 9px; height: 42px;
+}
 .mc-logo + .mc-text { display: none; }
 
 .brand-tabs {
@@ -145,6 +150,12 @@ img { max-width: 100%; }
   line-height: .98; letter-spacing: -.02em; font-weight: 900;
 }
 .hero-sub { margin: 0; font-size: clamp(16px, 1.4vw, 19px); color: var(--muted); max-width: 720px; }
+/* Logotype officiel : hauteur mesurée, jamais étiré. */
+.hero-logo {
+  display: block; height: clamp(38px, 5vw, 62px); width: auto;
+  max-width: min(100%, 460px); margin: 0 0 14px; object-fit: contain;
+}
+.hero-logo[hidden] { display: none; }
 .eyebrow { color: var(--eyebrow, var(--muted)); }
 
 /* ---------- Filtres --------------------------------------------------- */
@@ -234,7 +245,8 @@ img { max-width: 100%; }
   display: grid; place-items: center; padding: 18px;
   overflow: hidden;
 }
-.vehicle-visual img { width: 100%; height: 100%; object-fit: contain; }
+.vehicle-visual { padding: var(--img-pad, 18px); }
+.vehicle-visual img { width: 100%; height: 100%; object-fit: var(--img-fit, contain); }
 .placeholder {
   display: grid; place-items: center; gap: 6px; text-align: center;
   color: var(--card-muted, var(--muted));
@@ -273,11 +285,13 @@ img { max-width: 100%; }
 .status.stock { color: var(--ok); }
 .status.arrivage { color: var(--info); }
 .status.precommande { color: var(--precommande, #6b3fb5); }
+.status.commande { color: var(--commande, #4a6072); }
 .status.reserve { color: var(--warn); }
 .status.rupture { color: var(--danger); }
 .vehicle-card .status.stock { color: var(--card-ok, var(--ok)); }
 .vehicle-card .status.arrivage { color: var(--card-info, var(--info)); }
 .vehicle-card .status.precommande { color: var(--card-precommande, #6b3fb5); }
+.vehicle-card .status.commande { color: var(--card-commande, #4a6072); }
 .vehicle-card .status.reserve { color: var(--card-warn, var(--warn)); }
 .vehicle-card .status.rupture { color: var(--card-danger, var(--danger)); }
 .card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -366,7 +380,8 @@ body.modal-open { overflow: hidden; }
   background: var(--surface-2); display: grid; place-items: center; padding: 20px;
 }
 .dialog-shell .detail-visual { background: var(--card-visual, var(--surface-2)); }
-.detail-visual img { width: 100%; height: 100%; object-fit: contain; }
+.detail-visual { padding: var(--img-pad, 20px); }
+.detail-visual img { width: 100%; height: 100%; object-fit: var(--img-fit, contain); border-radius: 4px; }
 .detail-title { font-size: clamp(30px, 3.4vw, 46px); margin: 8px 0 4px; line-height: 1; letter-spacing: -.02em; }
 .detail-sub { color: var(--muted); margin: 0 0 12px; font-size: 17px; }
 .detail-color { margin: 0 0 16px; font-weight: 600; }
@@ -443,7 +458,7 @@ body.modal-open { overflow: hidden; }
   display: grid; place-items: center; padding: 10px; background: var(--surface-2);
 }
 .cmp-visual { background: var(--card-visual, var(--surface-2)); color: var(--card-muted, var(--muted)); }
-.cmp-visual img { width: 100%; height: 100%; object-fit: contain; }
+.cmp-visual img { width: 100%; height: 100%; object-fit: var(--img-fit, contain); }
 .cmp-visual .placeholder svg { width: 80px; height: 48px; }
 .cmp-model { font-size: 20px; font-weight: 900; line-height: 1.1; }
 .cmp-sub { color: var(--muted); font-weight: 600; font-size: 14px; }

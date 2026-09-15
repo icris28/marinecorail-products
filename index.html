@@ -6,14 +6,14 @@
 <title>Marine Corail – Catalogue Sea-Doo, Can-Am & Highfield</title>
 <meta name="description" content="Caractéristiques techniques, prix indicatifs et comparateur des unités Sea-Doo, Can-Am et Highfield disponibles chez Marine Corail.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css?v=005">
+<link rel="stylesheet" href="styles.css?v=006">
 <meta name="theme-color" content="#0b1f33">
 </head>
 <body data-brand="all">
 
 <header class="topbar">
   <a class="mc-mark" href="./" aria-label="Marine Corail – accueil du catalogue">
-    <img src="assets/logos/marine-corail.svg" alt="" class="mc-logo" onerror="this.remove()">
+    <img src="assets/logos/marine-corail.webp" alt="Marine Corail" class="mc-logo" onerror="this.remove()">
     <span class="mc-text">MARINE CORAIL</span>
   </a>
 
@@ -34,7 +34,10 @@
 <main>
   <section class="hero" id="hero">
     <p class="eyebrow" id="heroEyebrow">Catalogue Marine Corail</p>
-    <h1 id="heroTitle">Sea-Doo &amp; Can-Am</h1>
+    <!-- Logotype officiel de la marque sélectionnée ; le titre reste dans le
+         DOM, masqué visuellement, pour les lecteurs d'écran. -->
+    <img id="heroLogo" class="hero-logo" alt="" hidden>
+    <h1 id="heroTitle">Sea-Doo, Can-Am &amp; Highfield</h1>
     <p class="hero-sub" id="heroSub">Caractéristiques techniques, prix indicatifs et comparaison jusqu’à 3 modèles.</p>
   </section>
 
@@ -48,6 +51,7 @@
           <option value="stock">En stock</option>
           <option value="arrivage">Arrivage</option>
           <option value="precommande">Pré-commande</option>
+          <option value="commande">Sur commande</option>
           <option value="reserve">Réservé</option>
           <option value="rupture">Rupture</option>
         </select>
@@ -102,10 +106,10 @@
 
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="brands.js?v=005"></script>
-<script src="vehicles.js?v=005"></script>
-<script src="prices.js?v=005"></script>
-<script src="inventory.js?v=005"></script>
-<script src="app.js?v=005"></script>
+<script src="brands.js?v=006"></script>
+<script src="vehicles.js?v=006"></script>
+<script src="prices.js?v=006"></script>
+<script src="inventory.js?v=006"></script>
+<script src="app.js?v=006"></script>
 </body>
 </html>
