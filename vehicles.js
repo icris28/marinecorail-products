@@ -3669,7 +3669,7 @@ window.MC_VEHICLES = [
     "family": "outboard",
     "model": "eLite",
     "category": "eLite",
-    "image": null,
+    "image": "assets/images/epropulsion-elite.webp",
     "highlights": [
       "500 W (750 W en mode Sport)",
       "Batterie intégrée 378 Wh",
@@ -3717,7 +3717,7 @@ window.MC_VEHICLES = [
     "family": "outboard",
     "model": "Spirit 1.0 Plus Extra Court",
     "category": "Spirit 1.0 Plus",
-    "image": null,
+    "image": "assets/images/epropulsion-spirit-1-0-plus-extra-court.webp",
     "highlights": [
       "1000 W (3 ch équivalent)",
       "Batterie amovible 1276 Wh",
@@ -3765,7 +3765,7 @@ window.MC_VEHICLES = [
     "family": "outboard",
     "model": "Spirit 1.0 Evo Court",
     "category": "Spirit 1.0 Evo",
-    "image": null,
+    "image": "assets/images/epropulsion-spirit-1-0-evo-court.webp",
     "highlights": [
       "1000 W (3 ch équivalent)",
       "Hydrogénération sous voile",

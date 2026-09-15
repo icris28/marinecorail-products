@@ -112,9 +112,10 @@ ou les visuels du kit presse.
 
 Les 3 modèles ePropulsion (eLite, Spirit 1.0 Plus Extra Court, Spirit 1.0 Evo Court) n'ont pas
 de fiche PDF fournie : leurs caractéristiques viennent du site officiel epropulsion.com (fiche
-produit + base de pièces détachées). Aucune photo produit officielle n'a été récupérée — la
-carte affiche le pictogramme générique « moteur » (`SHAPES.outboard` dans `app.js`) tant qu'un
-visuel officiel n'est pas fourni.
+produit + base de pièces détachées). Les visuels sont les rendus studio officiels déposés dans
+`_sources/EPROPULSION/`, détourés (fond blanc → transparent) et recadrés ; le pictogramme
+générique « moteur » (`SHAPES.outboard` dans `app.js`) ne sert plus que de repli si une image
+venait à manquer.
 
 ## Déploiement
 
