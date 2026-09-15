@@ -3688,12 +3688,6 @@ window.MC_VEHICLES = [
         "Capacité": "378 Wh (25,2 V)",
         "Charge": "Secteur 220 V ; options chargeur 12 V et solaire"
       },
-      "Performance": {
-        "Vitesse max (mode Sport)": "8,3 km/h",
-        "Vitesse max (pleine puissance)": "7,5 km/h",
-        "Autonomie à demi-puissance (250 W)": "9 km",
-        "Autonomie à pleine puissance (500 W)": "5,6 km"
-      },
       "Dimensions / Poids": {
         "Poids moteur (hors support)": "6,7 kg",
         "Poids moteur (avec support)": "7,9 kg",
@@ -3706,6 +3700,12 @@ window.MC_VEHICLES = [
         "· Relevage et inclinaison réglables (8°/17°/26°, bascule 75°)": "Oui",
         "· Relevage eaux peu profondes (36°)": "Oui",
         "· Braquage ±70°": "Oui"
+      },
+      "Vitesse & autonomie": {
+        "Conditions d'essai": "Annexe aluminium 2,44 m (8 pi), 117 kg au total, 1 personne, eau calme",
+        "Demi-puissance — 250 W (50 %)": "6,0 km/h (3,2 nds) — 1h30 (9 km)",
+        "Pleine puissance — 500 W (100 %)": "7,5 km/h (4,0 nds) — 45 min (5,6 km)",
+        "Mode Sport — 750 W": "8,3 km/h (4,5 nds) — rafales de 1 min max"
       }
     }
   },
@@ -3729,8 +3729,17 @@ window.MC_VEHICLES = [
         "Puissance": "1000 W (3 ch équivalent)",
         "Tension d'entrée": "39 - 60 V",
         "Moteur": "Brushless à entraînement direct",
-        "Vitesse max": "10 km/h (à 1000 W)",
         "Rendement": "83 %"
+      },
+      "Vitesse & autonomie": {
+        "Conditions d'essai": "Bateau aluminium 3,66 m (12 pi), 1 personne, 1 batterie Spirit Battery Plus, eau calme",
+        "3,5 % — 35 W": "3,5 km/h (1,9 nds) — 36h25 (129 km)",
+        "6,5 % — 65 W": "4,3 km/h (2,3 nds) — 19h35 (85 km)",
+        "12,5 % — 125 W": "5,6 km/h (3,0 nds) — 10h00 (56 km)",
+        "25 % — 250 W": "7,1 km/h (3,8 nds) — 5h00 (35,5 km)",
+        "50 % — 500 W": "8,5 km/h (4,6 nds) — 2h30 (21,3 km)",
+        "75 % — 750 W": "9,2 km/h (5,0 nds) — 1h40 (15,3 km)",
+        "100 % — 1000 W": "10 km/h (5,4 nds) — 1h15 (12,5 km)"
       },
       "Batterie": {
         "Modèle": "Spirit Battery Plus, 1276 Wh Li-ion polymère, flottante",
@@ -3777,8 +3786,17 @@ window.MC_VEHICLES = [
         "Puissance": "1000 W (3 ch équivalent)",
         "Tension nominale": "48 V (plage d'entrée 39 - 60 V)",
         "Moteur": "Brushless à entraînement direct",
-        "Vitesse max": "10 km/h (à 1000 W)",
         "Rendement": "83 %"
+      },
+      "Vitesse & autonomie": {
+        "Conditions d'essai": "Bateau aluminium 3,66 m (12 pi), 1 personne, 1 batterie Spirit Battery Plus, eau calme",
+        "3,5 % — 35 W": "3,5 km/h (1,9 nds) — 36h25 (129 km)",
+        "6,5 % — 65 W": "4,3 km/h (2,3 nds) — 19h35 (85 km)",
+        "12,5 % — 125 W": "5,6 km/h (3,0 nds) — 10h00 (56 km)",
+        "25 % — 250 W": "7,1 km/h (3,8 nds) — 5h00 (35,5 km)",
+        "50 % — 500 W": "8,5 km/h (4,6 nds) — 2h30 (21,3 km)",
+        "75 % — 750 W": "9,2 km/h (5,0 nds) — 1h40 (15,3 km)",
+        "100 % — 1000 W": "10 km/h (5,4 nds) — 1h15 (12,5 km)"
       },
       "Batterie": {
         "Modèle": "Spirit Battery Plus, 1276 Wh Li-ion polymère (vendue séparément)",
