@@ -39,6 +39,20 @@
   const params = new URLSearchParams(location.search);
   document.body.dataset.mode = params.has("kiosk") ? "kiosk" : params.has("app") ? "app" : "web";
 
+  // Mode borne : plein écran dès le premier contact (l'API l'exige) ; le
+  // bouton retour Android ferme les panneaux au lieu de quitter la page
+  // (cf. modalOpen/modalClose plus bas).
+  if (document.body.dataset.mode === "kiosk") {
+    const goFullscreen = () => {
+      const root = document.documentElement;
+      if (!document.fullscreenElement && root.requestFullscreen) {
+        root.requestFullscreen().catch(() => {});
+      }
+      window.removeEventListener("pointerdown", goFullscreen);
+    };
+    window.addEventListener("pointerdown", goFullscreen, { once: true });
+  }
+
   /* ---------- Utilitaires -------------------------------------------- */
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => Array.from(root.querySelectorAll(s));
@@ -109,16 +123,38 @@
   }
 
   /* ---------- Panneaux modaux (sans <dialog>) ------------------------ */
+  // Mode borne : un seul état d'historique pour la session « panneau ouvert »
+  // (même si openDetail() est rappelée plusieurs fois sur le panneau déjà
+  // ouvert, par ex. en basculant la sélection comparateur) : le bouton retour
+  // Android ferme le panneau plutôt que de quitter la borne.
+  let kioskHistoryPushed = false;
   function modalOpen(el) {
     el.hidden = false;
     document.body.classList.add("modal-open");
     el.querySelector(".dialog-shell").scrollTop = 0;
+    if (document.body.dataset.mode === "kiosk" && !kioskHistoryPushed) {
+      history.pushState({ mcModal: true }, "");
+      kioskHistoryPushed = true;
+    }
   }
-  function modalClose(el) {
+  function modalClose(el, opts) {
+    if (el.hidden) return;
     el.hidden = true;
-    if (!$(".modal:not([hidden])")) document.body.classList.remove("modal-open");
+    const stillOpen = !!$(".modal:not([hidden])");
+    if (!stillOpen) document.body.classList.remove("modal-open");
+    const fromPopstate = opts && opts.fromPopstate;
+    if (!stillOpen && document.body.dataset.mode === "kiosk" && kioskHistoryPushed) {
+      kioskHistoryPushed = false;
+      if (!fromPopstate) history.back();
+    }
   }
   function modalIsOpen(el) { return !el.hidden; }
+
+  // Bouton retour Android en mode borne : ferme le panneau ouvert.
+  window.addEventListener("popstate", () => {
+    const open = $(".modal:not([hidden])");
+    if (open) modalClose(open, { fromPopstate: true });
+  });
 
   let toastTimer = null;
   function toast(message) {

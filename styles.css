@@ -526,3 +526,79 @@ body.modal-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* ---------- Mode borne (kiosque tactile 21,5", paysage) ----------------
+   Activé via body[data-mode="kiosk"], posé par app.js dès que l'URL contient
+   ?kiosk=1 (systématique pour kiosk.html). Pas de breakpoint calé sur la
+   diagonale/résolution physique annoncée (1920×1080) : le DPR Android expose
+   un viewport CSS différent. Mesures réelles relevées sur la borne (18/09) :
+   window.innerWidth=1024, innerHeight=576, devicePixelRatio≈1.49 (screen.*
+   1291×727 = valeurs CSS avant application du DPR, ignorées pour le
+   dimensionnement). Le flag de mode reste le signal fiable ; en dessous,
+   un bloc resserré sur la plage de largeur réellement mesurée (860–1279px,
+   paysage, tactile) exploite précisément ces 1024×576 px : 3 colonnes,
+   chrome (bandeau + filtres) très compact vu les 576px de hauteur. ------ */
+body[data-mode="kiosk"] {
+  --tap: 56px;
+}
+body[data-mode="kiosk"] .brand-tab,
+body[data-mode="kiosk"] .filter-chip,
+body[data-mode="kiosk"] .select-box,
+body[data-mode="kiosk"] .search-box,
+body[data-mode="kiosk"] .compare-pill { min-height: 52px; font-size: 17px; }
+body[data-mode="kiosk"] .select-box select { min-height: 48px; font-size: 16px; }
+body[data-mode="kiosk"] .close { width: 60px; height: 60px; font-size: 32px; }
+body[data-mode="kiosk"] { overflow-x: hidden; }
+
+/* Le compteur de résultats est un détail utile en usage libre, pas en borne. */
+body[data-mode="kiosk"] .result-count { display: none; }
+
+/* Bandeau réduit à l'essentiel : priorité verticale à la grille produits. */
+body[data-mode="kiosk"] .hero { padding-top: 8px; padding-bottom: 6px; }
+body[data-mode="kiosk"] .eyebrow { display: none; }
+body[data-mode="kiosk"] .hero-sub { display: none; }
+body[data-mode="kiosk"] .hero h1 { font-size: 22px; line-height: 1.1; margin: 0; }
+body[data-mode="kiosk"] .hero-logo { height: 28px; margin: 0 0 4px; }
+
+/* Filtres compacts : chips défilables sur une ligne (règle héritée <1180px),
+   sélecteurs et bouton reset resserrés verticalement. */
+body[data-mode="kiosk"] .filters { padding: 8px var(--gutter) 4px; gap: 8px 14px; }
+
+/* Grille catalogue : cartes plus grandes, photo produit prioritaire. */
+body[data-mode="kiosk"] .catalog {
+  padding: 10px var(--gutter) 16px;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+body[data-mode="kiosk"] .vehicle-body { padding: 14px 18px 16px; gap: 10px; }
+body[data-mode="kiosk"] .vehicle-title { font-size: 24px; }
+body[data-mode="kiosk"] .card-actions .btn { min-height: 52px; font-size: 16px; }
+
+/* Fiche détaillée : image large mais qui laisse voir le prix/actions sans
+   défiler sur les 576px de hauteur disponibles. */
+body[data-mode="kiosk"] .detail-visual { min-height: 200px; max-height: 260px; }
+body[data-mode="kiosk"] .spec-row { font-size: 17px; padding: 12px 0; }
+body[data-mode="kiosk"] .detail-actions .btn { min-height: 56px; font-size: 17px; }
+
+/* Comparateur : lisible sans texte minuscule, scroll horizontal existant
+   pour au-delà de ce que 1024px affiche confortablement. */
+body[data-mode="kiosk"] .modal.wide .modal-box { max-width: min(1700px, 96vw); }
+body[data-mode="kiosk"] .compare-table { font-size: 17px; }
+body[data-mode="kiosk"] .compare-table th,
+body[data-mode="kiosk"] .compare-table td { padding: 14px 16px; }
+body[data-mode="kiosk"] .cmp-visual { min-height: 120px; max-height: 160px; }
+body[data-mode="kiosk"] .cmp-model { font-size: 20px; }
+
+/* ---- Plage calée sur les mesures réelles (1024×576 CSS px, paysage) ----
+   3 colonnes pleine largeur avec de grandes photos, chrome minimal. Bornée
+   à une plage plutôt qu'à 1024px pile : encaisse un écart de quelques
+   pixels (barre navigateur, arrondi) sans revenir brutalement à l'auto-fill
+   générique ci-dessus. */
+@media (pointer: coarse) and (orientation: landscape) and (min-width: 860px) and (max-width: 1279px) {
+  body[data-mode="kiosk"] .catalog {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  body[data-mode="kiosk"] .vehicle-visual { min-height: 170px; max-height: 210px; }
+  body[data-mode="kiosk"] .vehicle-body { padding: 12px 16px 14px; gap: 8px; }
+}
