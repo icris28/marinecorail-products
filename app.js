@@ -38,7 +38,8 @@
     seats: "all",
     query: "",
     compare: [],          // ids, dans l'ordre de sélection
-    diffOnly: false
+    diffOnly: false,
+    colorChoice: {}       // id -> index choisi dans v.colors (coloris à 2 choix, précommande)
   };
 
   const params = new URLSearchParams(location.search);
@@ -51,7 +52,19 @@
     const goFullscreen = () => {
       const root = document.documentElement;
       if (!document.fullscreenElement && root.requestFullscreen) {
-        root.requestFullscreen().catch(() => {});
+        root.requestFullscreen()
+          .then(() => {
+            // Verrouille l'orientation paysage : la borne est montée en
+            // paysage, mais la rotation auto Android peut parfois la faire
+            // basculer en portrait (grille à 2 colonnes au lieu de 3). L'API
+            // Screen Orientation n'est utilisable qu'en plein écran sur la
+            // plupart des navigateurs, d'où l'enchaînement ici. Best-effort :
+            // pas supportée partout, échoue en silence si indisponible.
+            if (screen.orientation && screen.orientation.lock) {
+              screen.orientation.lock("landscape").catch(() => {});
+            }
+          })
+          .catch(() => {});
       }
       window.removeEventListener("pointerdown", goFullscreen);
     };
@@ -88,6 +101,32 @@
     if (!formatted) return `<div class="${cls} na">Prix sur demande</div>`;
     const prefixe = estApprox ? `<span class="price-approx-label">À partir de</span>` : "";
     return `<div class="${cls}">${prefixe}${esc(formatted)}<small>TTC</small></div>`;
+  }
+
+  // Coloris affiché sous la fiche/carte :
+  // - inv.color (inventory.js) = coloris réel d'une unité précise en stock,
+  //   affiché tel quel (aucun choix possible, c'est un fait).
+  // - v.colors (vehicles.js) = coloris proposés par le constructeur pour un
+  //   modèle en précommande. Un seul coloris -> affiché tel quel. Deux
+  //   coloris ou plus -> sélecteur cliquable (data-color-pick), pour que la
+  //   personne qui consulte le catalogue choisisse lequel afficher.
+  function colorHTML(v, cls) {
+    const inv = inventoryOf(v.id);
+    if (inv.color) return `<div class="${cls}">Coloris : ${esc(inv.color)}</div>`;
+
+    const colors = v.colors || [];
+    if (colors.length === 0) return "";
+    if (colors.length === 1) return `<div class="${cls}">Coloris : ${esc(colors[0])}</div>`;
+
+    const idx = state.colorChoice[v.id] ?? 0;
+    const options = colors.map((c, i) => `
+      <button type="button" class="color-swatch ${i === idx ? "is-active" : ""}"
+              data-color-pick="${esc(v.id)}:${i}" aria-pressed="${i === idx}">${esc(c)}</button>`
+    ).join("");
+    return `<div class="${cls} has-color-picker">
+      <span class="color-picker-label">Coloris :</span>
+      <div class="color-picker">${options}</div>
+    </div>`;
   }
 
   function inventoryOf(id) {
@@ -315,7 +354,7 @@
     if (state.status !== "all" && inv.status !== state.status) return false;
     if (state.seats !== "all" && String(v.seats) !== state.seats) return false;
     if (state.query) {
-      const hay = [v.brandLabel, v.model, v.year, v.category, inv.color, ...(v.highlights || [])]
+      const hay = [v.brandLabel, v.model, v.year, v.category, inv.color, ...(v.colors || []), ...(v.highlights || [])]
         .concat(Object.values(v.specs || {}).flatMap(sec => Object.values(sec)))
         .join(" ").toLowerCase();
       if (!hay.includes(state.query)) return false;
@@ -339,7 +378,7 @@
     <div class="vehicle-title">${esc(v.model)}</div>
     <div class="vehicle-sub">${esc(metaLigne(v))}</div>
     <div class="spec-chips">${(v.highlights || []).map(h => `<span class="chip">${esc(h)}</span>`).join("")}</div>
-    ${inv.color ? `<div class="vehicle-sub">Coloris : ${esc(inv.color)}</div>` : ""}
+    ${colorHTML(v, "vehicle-sub")}
     <div class="price-row">${priceHTML(v.id, "price")}</div>
     <div class="card-actions">
       <button class="btn primary" type="button" data-detail="${esc(v.id)}">Voir la fiche</button>
@@ -373,6 +412,11 @@
       : "";
     $$("[data-detail]", catalog).forEach(b => b.addEventListener("click", () => openDetail(b.dataset.detail)));
     $$("[data-compare]", catalog).forEach(b => b.addEventListener("click", () => toggleCompare(b.dataset.compare)));
+    $$("[data-color-pick]", catalog).forEach(b => b.addEventListener("click", () => {
+      const [id, idx] = b.dataset.colorPick.split(":");
+      state.colorChoice[id] = Number(idx);
+      render();
+    }));
     renderTray();
   }
 
@@ -399,7 +443,7 @@
     <span class="brand-badge">${esc(v.brandLabel)}</span>
     <h2 class="detail-title" id="detailTitle">${esc(v.model)}</h2>
     <p class="detail-sub">${esc(metaLigne(v))}</p>
-    ${inv.color ? `<p class="detail-color">Coloris : ${esc(inv.color)}</p>` : ""}
+    ${colorHTML(v, "detail-color")}
     ${priceHTML(id, "detail-price")}
     <div class="detail-status">${statusHTML(id)}</div>
     <div class="detail-actions">
@@ -415,6 +459,11 @@ ${sections}
       toggleCompare(id);
       openDetail(id); // rafraîchit le bouton
     });
+    $$("[data-color-pick]", $("#detailContent")).forEach(b => b.addEventListener("click", () => {
+      const [cid, idx] = b.dataset.colorPick.split(":");
+      state.colorChoice[cid] = Number(idx);
+      openDetail(id); // rafraîchit la fiche avec le coloris choisi
+    }));
 
     modalOpen($("#detailDialog"));
   }

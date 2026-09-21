@@ -94,6 +94,10 @@ window.MC_VEHICLES = [
     "category": "Performance",
     "seats": 1,
     "image": "assets/images/seadoo-rxp-x-350-2027.webp",
+    "colors": [
+      "Orange solaire métallique haut de gamme",
+      "Bleu océan"
+    ],
     "highlights": [
       "350 ch",
       "Coque T3-R",
@@ -232,6 +236,10 @@ window.MC_VEHICLES = [
     "category": "Performance",
     "seats": 3,
     "image": "assets/images/seadoo-rxt-x-350-2027.webp",
+    "colors": [
+      "Orange solaire métallique haut de gamme",
+      "Bleu océan"
+    ],
     "highlights": [
       "350 ch",
       "3 places",
@@ -302,6 +310,10 @@ window.MC_VEHICLES = [
     "category": "Récréatif",
     "seats": 1,
     "image": "assets/images/seadoo-spark-x-trixx-1up-2027.webp",
+    "colors": [
+      "Bleu brume et Éclat de corail",
+      "Bleu océan et Orange crush"
+    ],
     "highlights": [
       "110 ch",
       "1 place",
@@ -368,6 +380,10 @@ window.MC_VEHICLES = [
     "category": "Récréatif",
     "seats": 3,
     "image": "assets/images/seadoo-spark-x-trixx-3up-2027.webp",
+    "colors": [
+      "Bleu brume et Éclat de corail",
+      "Bleu océan et Orange crush"
+    ],
     "highlights": [
       "110 ch",
       "3 places",
@@ -730,6 +746,10 @@ window.MC_VEHICLES = [
     "category": "Touring",
     "seats": 3,
     "image": "assets/images/seadoo-gtx-limited-350-2027.webp",
+    "colors": [
+      "Bleu minéral",
+      "Blanc perlé haut de gamme"
+    ],
     "highlights": [
       "350 ch",
       "3 places",
