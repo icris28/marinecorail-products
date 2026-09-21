@@ -4,7 +4,7 @@
 Usage :
     python3 tools/maj-prix.py _sources/tarifs-marine-corail.xlsx
 
-Lit l'onglet « Tarifs » : colonne A = identifiant, colonne I = prix TTC en F CFP.
+Lit l'onglet « Tarifs » : colonne A = identifiant, colonne L = prix TTC en F CFP.
 Une cellule vide donne null (le catalogue affiche « Prix sur demande »).
 Les identifiants absents de vehicles.js sont signalés et ignorés.
 Nécessite openpyxl :  pip install openpyxl
@@ -25,7 +25,7 @@ def main(xlsx):
     ws = load_workbook(xlsx, data_only=True)["Tarifs"]
     prix, inconnus = {}, []
     for ligne in ws.iter_rows(min_row=5, values_only=True):
-        ident, valeur = ligne[0], ligne[8]
+        ident, valeur = ligne[0], ligne[11]
         if not ident or not isinstance(ident, str) or not re.match(r"^[a-z0-9-]+$", ident):
             continue
         if ident not in connus:

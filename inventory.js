@@ -191,5 +191,29 @@ window.MC_INVENTORY = {
   },
   "epropulsion-spirit-1-0-evo-court": {
     "status": "commande"
-  }
+  },
+  "highfield-adv-7": {
+    "status": "commande"
+  },
+  "highfield-adv-9": {
+    "status": "commande"
+  },
+  "highfield-rollup-230-al": {
+    "status": "commande"
+  },
+  "highfield-rollup-230-kam": {
+    "status": "commande"
+  },
+  "highfield-rollup-250-al": {
+    "status": "commande"
+  },
+  "highfield-rollup-250-kam": {
+    "status": "commande"
+  },
+  "highfield-rollup-280-al": {
+    "status": "commande"
+  },
+  "highfield-rollup-280-kam": {
+    "status": "commande"
+  },
 };

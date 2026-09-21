@@ -25,6 +25,7 @@
 //   ui           jetons de couleur de l'interface
 
 window.MC_BRANDS = [
+
   {
     id: "all",
     label: "Tous",
@@ -83,39 +84,6 @@ window.MC_BRANDS = [
       chipInk: "#0b3350",
       focus: "#00a3e0",
       eyebrow: "#0077a8"
-    }
-  },
-
-  {
-    id: "can-am",
-    label: "Can-Am",
-    dark: true,
-    accent: "#ffc72c",
-    accentInk: "#121416",
-    logo: "assets/logos/can-am-blanc.webp",
-    tab: { bg: "#ffc72c", ink: "#121416" },
-    hero: {
-      eyebrow: "Quads & SSV",
-      title: "Can-Am",
-      sub: "Robustes, techniques, prêts pour le terrain : les Outlander disponibles chez Marine Corail."
-    },
-    empty: "Aucun véhicule Can-Am n’est actuellement au catalogue.",
-    visual: "linear-gradient(180deg, #2a2e33 0%, #1a1d20 100%)",
-    imageFit: "contain",
-    texture: "repeating-linear-gradient(45deg, rgba(255,255,255,.015) 0 2px, transparent 2px 8px)",
-    ui: {
-      bg: "#121416",
-      bgHero: "linear-gradient(160deg, #1e2124 0%, #121416 70%)",
-      surface: "#1c1f23",
-      surface2: "#24282d",
-      ink: "#f3f4f5",
-      muted: "#a3acb6",
-      line: "#33393f",
-      accentSoft: "#3a3410",
-      chip: "#2a2e33",
-      chipInk: "#e6e9ec",
-      focus: "#ffc72c",
-      eyebrow: "#ffc72c"
     }
   },
 
@@ -182,6 +150,39 @@ window.MC_BRANDS = [
       chipInk: "#0a3d6b",
       focus: "#005dab",
       eyebrow: "#005dab"
+    }
+  },
+
+  {
+    id: "can-am",
+    label: "Can-Am",
+    dark: true,
+    accent: "#ffc72c",
+    accentInk: "#121416",
+    logo: "assets/logos/can-am-blanc.webp",
+    tab: { bg: "#ffc72c", ink: "#121416" },
+    hero: {
+      eyebrow: "Quads & SSV",
+      title: "Can-Am",
+      sub: "Robustes, techniques, prêts pour le terrain : les Outlander disponibles chez Marine Corail."
+    },
+    empty: "Aucun véhicule Can-Am n’est actuellement au catalogue.",
+    visual: "linear-gradient(180deg, #2a2e33 0%, #1a1d20 100%)",
+    imageFit: "contain",
+    texture: "repeating-linear-gradient(45deg, rgba(255,255,255,.015) 0 2px, transparent 2px 8px)",
+    ui: {
+      bg: "#121416",
+      bgHero: "linear-gradient(160deg, #1e2124 0%, #121416 70%)",
+      surface: "#1c1f23",
+      surface2: "#24282d",
+      ink: "#f3f4f5",
+      muted: "#a3acb6",
+      line: "#33393f",
+      accentSoft: "#3a3410",
+      chip: "#2a2e33",
+      chipInk: "#e6e9ec",
+      focus: "#ffc72c",
+      eyebrow: "#ffc72c"
     }
   }
 ];

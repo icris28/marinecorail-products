@@ -23,6 +23,11 @@
   const brandById = id => BRANDS.find(b => b.id === id) || BRANDS[0] || { id: "all", label: "Tous", ui: {} };
 
   const MAX_COMPARE = 3;
+
+  // Priorité d'affichage : les unités en stock remontent en tête de liste,
+  // le reste garde l'ordre du catalogue (tri stable) à l'intérieur de
+  // chaque statut.
+  const STATUS_PRIORITY = { stock: 0, arrivage: 1, precommande: 2, commande: 3, reserve: 4, rupture: 5 };
   const PRICE_NOTE = "Les prix affichés sont donnés à titre indicatif et n’ont pas de valeur contractuelle. Ils peuvent être modifiés à tout moment. Seuls les prix affichés en magasin par Marine Corail font foi.";
 
   /* ---------- État ---------------------------------------------------- */
@@ -347,7 +352,11 @@
   }
 
   function render() {
-    const rows = VEHICLES.filter(matches);
+    const rows = VEHICLES.filter(matches).sort((a, b) => {
+      const pa = STATUS_PRIORITY[inventoryOf(a.id).status] ?? 6;
+      const pb = STATUS_PRIORITY[inventoryOf(b.id).status] ?? 6;
+      return pa - pb;
+    });
     const catalog = $("#catalog");
     catalog.innerHTML = rows.length
       ? rows.map(cardHTML).join("")

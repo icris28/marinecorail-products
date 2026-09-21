@@ -2970,7 +2970,8 @@ window.MC_VEHICLES = [
       },
       "Capacité": {
         "Charge maximale": "1375 kg",
-        "Personnes maximum": "12"
+        "Personnes maximum": "12",
+        "Réservoir de carburant": "105 L"
       },
       "Motorisation": {
         "Puissance maximale": "115 hp",
@@ -2978,26 +2979,35 @@ window.MC_VEHICLES = [
       },
       "Construction": {
         "Coque": "Aluminium haute résistance chromaté et thermolaqué",
-        "Boudins": "ORCA Hypalon ou PVC"
+        "Boudins": "ORCA Hypalon ou PVC",
+        "Catégorie de conception CE": "C"
       },
       "Équipements de série": {
-        "· Boudins ORCA Hypalon ou PVC": "Oui",
-        "· Direction hydraulique": "Oui",
-        "· Clapets anti-retour affleurants": "Oui",
-        "· Coque aluminium haute résistance, chromatée et thermolaquée": "Oui",
+        "· Flotteur en Hypalon ORCA®": "Oui",
+        "· Soudures renforcées": "Oui",
+        "· Système de direction hydraulique et volant": "Oui",
+        "· Valves anti-retour encastrées": "Oui",
+        "· Coque en aluminium haute résistance avec traitement chromate et revêtement poudre": "Oui",
         "· Pont auto-videur": "Oui",
         "· Banquette arrière intégrée avec coussin": "Oui",
         "· Supports de tableau arrière intégrés": "Oui",
         "· Points de levage et anneaux de remorquage": "Oui",
-        "· Pont finition teck moussé brossé": "Oui",
-        "· Liston renforcé": "Oui",
+        "· Pont finition teck en mousse brossée": "Oui",
+        "· Protection d'étrave renforcée": "Oui",
         "· Protection de quille": "Oui",
         "· Sac étanche Highfield": "Oui",
         "· Pompe à pied et kit de réparation": "Oui",
-        "· Faisceau électrique bateau et console": "Oui"
+        "· Installation électrique pour bateau et console": "Oui",
+        "· Tableau de bord carbone pour la console": "Oui",
+        "· Plateformes avec échelle": "Oui",
+        "· Roll bar": "Oui",
+        "· Bain de soleil avant": "Oui",
+        "· Sac isotherme": "Oui"
       },
       "Options": {
-        "· Taud de bateau": "En option"
+        "· Housse de bateau": "En option",
+        "· Taud de soleil": "En option",
+        "· T-Top en toile": "En option"
       }
     }
   },
@@ -3822,6 +3832,501 @@ window.MC_VEHICLES = [
         "· Hydrogénération sous voile": "Oui",
         "· Application Bluetooth (batterie, vitesse, autonomie)": "Oui",
         "· Écran numérique": "Oui"
+      }
+    }
+  },
+  {
+    "id": "highfield-adv-7",
+    "active": true,
+    "brand": "highfield",
+    "brandLabel": "Highfield",
+    "family": "rib",
+    "model": "ADV 7",
+    "category": "ADV",
+    "seats": 8,
+    "image": "assets/images/highfield-adv-7.webp",
+    "highlights": [
+      "6.98 m",
+      "8 places",
+      "300 hp max",
+      "Boudins Hypalon"
+    ],
+    "specs": {
+      "Dimensions": {
+        "Longueur hors-tout": "6.98 m / 22.9 ft",
+        "Longueur intérieure": "5.19 m / 17 ft",
+        "Largeur hors-tout": "2.68 m / 8.8 ft",
+        "Largeur intérieure": "2 m / 6.6 ft",
+        "Poids du bateau": "1300 kg / 2866 lbs"
+      },
+      "Capacité": {
+        "Personnes maximum": "8",
+        "Réservoir carburant": "270 l"
+      },
+      "Motorisation": {
+        "Puissance maximale": "300 hp"
+      },
+      "Construction": {
+        "Boudins": "Hypalon",
+        "Catégorie de conception CE": "C"
+      },
+      "Équipements de série": {
+        "· Console": "Oui",
+        "· Siège": "Oui",
+        "· Pack électrique": "Oui",
+        "· Système de direction": "Oui",
+        "· Volant": "Oui",
+        "· Taud de soleil": "Oui",
+        "· T-top": "Oui",
+        "· Arceau (A-frame)": "Oui",
+        "· Échelle de bain": "Oui",
+        "· Évier (cuisine)": "Oui",
+        "· 2 bains de soleil": "Oui",
+        "· Douche": "Oui",
+        "· Toilettes portables": "Oui",
+        "· Réfrigérateur": "Oui",
+        "· Table arrière": "Oui"
+      },
+      "Options": {
+        "· Toilettes marines": "En option",
+        "· Guindeau": "En option"
+      }
+    }
+  },
+  {
+    "id": "highfield-adv-9",
+    "active": true,
+    "brand": "highfield",
+    "brandLabel": "Highfield",
+    "family": "rib",
+    "model": "ADV 9",
+    "category": "ADV",
+    "seats": null,
+    "image": "assets/images/highfield-adv-9.webp",
+    "highlights": [
+      "9.2 m",
+      "300 hp x2 ou 450 hp x1",
+      "Jusqu'à 4 couchages",
+      "50 nœuds / 250 NM"
+    ],
+    "specs": {
+      "Dimensions": {
+        "Longueur hors-tout": "9.2 m / 30.2 ft",
+        "Largeur hors-tout": "3.27 m / 10.7 ft",
+        "Hauteur (avec mât radar)": "3.51 m / 11.5 ft",
+        "Largeur intérieure": "2.4 m / 7.9 ft",
+        "Poids du bateau (approximatif)": "3600 kg"
+      },
+      "Capacité": {
+        "Couchages": "Jusqu'à 4",
+        "Réservoir carburant": "450 l"
+      },
+      "Motorisation": {
+        "Puissance maximale": "300 hp x 2 ou 450 hp x 1"
+      },
+      "Construction": {
+        "Boudins": "Hypalon, tubes coulissants (slide-on)"
+      },
+      "Équipements de série": {
+        "· Pont antidérapant": "Oui",
+        "· Boudins Hypalon": "Oui",
+        "· Mobilier de cabine": "Oui",
+        "· Vitrage / hublots / porte de cabine": "Oui",
+        "· Banquette arrière centrale": "Oui",
+        "· Poste de pilotage avec 2 sièges": "Oui",
+        "· Sellerie sièges pilote/passager": "Oui",
+        "· Panneaux intérieurs sellerie": "Oui",
+        "· Filières avant": "Oui",
+        "· Marchepieds latéraux arrière": "Oui",
+        "· Installation électrique de base": "Oui",
+        "· Taquets": "Oui"
+      },
+      "Options": {
+        "· A-frame": "En option",
+        "· Hard-top": "En option",
+        "· Trappe de pont additionnelle à l'avant": "En option",
+        "· Galerie de toit aluminium": "En option",
+        "· Sièges chauffants": "En option",
+        "· Banquettes latérales / sofas de cockpit": "En option",
+        "· Table de cockpit": "En option",
+        "· Coussin de table": "En option",
+        "· Coussin de pointe avant": "En option",
+        "· Flexiteek": "En option",
+        "· Scanstrut Atmos": "En option",
+        "· Porte-cannes dans le hard-top": "En option",
+        "· Taud avant et arrière": "En option",
+        "· Auvent": "En option",
+        "· Matelas de cabine": "En option",
+        "· Chargeur sans fil cabine avant": "En option",
+        "· Housse de siège de toilette en tissu": "En option",
+        "· Occultants de cabine": "En option",
+        "· Système de chauffage": "En option",
+        "· Climatisation": "En option",
+        "· Circuit d'eau douce": "En option",
+        "· Circuit d'eaux grises": "En option",
+        "· Toilettes avec circuit d'eaux noires": "En option",
+        "· Propulseur d'étrave": "En option",
+        "· Bar (wetbar)": "En option",
+        "· Réfrigérateur (1 ou 2 en cuisine)": "En option",
+        "· Réchaud gaz": "En option",
+        "· Plaque électrique": "En option",
+        "· Grill électrique": "En option",
+        "· Vivier à appâts": "En option",
+        "· Pack éclairage RGB": "En option",
+        "· Éclairage sous-marin": "En option",
+        "· Projecteur de recherche": "En option",
+        "· Trim tabs Lenco": "En option",
+        "· Trim tabs Zipwake Interceptor 600S": "En option",
+        "· Trim tabs Seakeeper Ride 525": "En option",
+        "· Guindeau d'étrave": "En option",
+        "· Kit d'amarrage": "En option",
+        "· Alimentation quai": "En option",
+        "· Équipement de navigation": "En option",
+        "· Radar Simrad": "En option",
+        "· VHF": "En option",
+        "· Système audio Fusion (4 haut-parleurs)": "En option"
+      }
+    }
+  },
+  {
+    "id": "highfield-rollup-230-al",
+    "active": true,
+    "brand": "highfield",
+    "brandLabel": "Highfield",
+    "family": "rib",
+    "model": "Roll-Up 230 AL",
+    "category": "Roll-Up",
+    "seats": 3,
+    "image": "assets/images/highfield-rollup.webp",
+    "highlights": [
+      "230 cm",
+      "3 places",
+      "4 hp max",
+      "Plancher aluminium"
+    ],
+    "specs": {
+      "Dimensions": {
+        "Longueur hors-tout": "230 cm / 7'7\"",
+        "Longueur intérieure": "157 cm / 5'2\"",
+        "Largeur hors-tout": "139 cm / 4'7\"",
+        "Largeur intérieure": "61 cm / 2'0\"",
+        "Poids du bateau": "31 kg / 68 lbs"
+      },
+      "Flotteurs": {
+        "Diamètre des boudins": "36 cm / 14\"",
+        "Compartiments à air": "3"
+      },
+      "Capacité": {
+        "Charge maximale": "350 kg / 772 lbs",
+        "Personnes maximum": "3"
+      },
+      "Motorisation": {
+        "Puissance recommandée": "4 hp",
+        "Puissance maximale": "4 hp",
+        "Arbre moteur": "Court (S)"
+      },
+      "Construction": {
+        "Plancher": "Latté aluminium avec quille",
+        "Boudin": "PVC à coutures soudées (Hypalon en option)",
+        "Tableau arrière": "Aluminium chromaté et thermolaqué haute résistance"
+      },
+      "Coloris": {
+        "Disponibles": "Blanc (WH), Gris clair (LG)"
+      },
+      "Équipements de série": {
+        "· Clapets anti-retour affleurants": "Oui",
+        "· Banc amovible": "Oui",
+        "· Points de remorquage en patte d'oie": "Oui",
+        "· Liston léger": "Oui",
+        "· Pompe à pied, avirons et kit de réparation": "Oui"
+      },
+      "Options": {
+        "· Boudin Hypalon": "En option"
+      }
+    }
+  },
+  {
+    "id": "highfield-rollup-230-kam",
+    "active": true,
+    "brand": "highfield",
+    "brandLabel": "Highfield",
+    "family": "rib",
+    "model": "Roll-Up 230 KAM",
+    "category": "Roll-Up",
+    "seats": 2,
+    "image": "assets/images/highfield-rollup.webp",
+    "highlights": [
+      "230 cm",
+      "2 places",
+      "4 hp max",
+      "Plancher Airmat"
+    ],
+    "specs": {
+      "Dimensions": {
+        "Longueur hors-tout": "230 cm / 7'7\"",
+        "Longueur intérieure": "154 cm / 5'0\"",
+        "Largeur hors-tout": "137 cm / 4'6\"",
+        "Largeur intérieure": "61 cm / 2'0\"",
+        "Poids du bateau": "26 kg / 57 lbs"
+      },
+      "Flotteurs": {
+        "Diamètre des boudins": "36 cm / 14\"",
+        "Compartiments à air": "3"
+      },
+      "Capacité": {
+        "Charge maximale": "350 kg / 772 lbs",
+        "Personnes maximum": "2"
+      },
+      "Motorisation": {
+        "Puissance recommandée": "4 hp",
+        "Puissance maximale": "4 hp",
+        "Arbre moteur": "Court (S)"
+      },
+      "Construction": {
+        "Plancher": "Airmat (gonflable) avec quille",
+        "Boudin": "PVC à coutures soudées (Hypalon en option)",
+        "Tableau arrière": "Aluminium chromaté et thermolaqué haute résistance"
+      },
+      "Coloris": {
+        "Disponibles": "Blanc (WH), Gris clair (LG)"
+      },
+      "Équipements de série": {
+        "· Clapets anti-retour affleurants": "Oui",
+        "· Banc amovible": "Oui",
+        "· Points de remorquage en patte d'oie": "Oui",
+        "· Liston léger": "Oui",
+        "· Pompe à pied, avirons et kit de réparation": "Oui"
+      },
+      "Options": {
+        "· Boudin Hypalon": "En option"
+      }
+    }
+  },
+  {
+    "id": "highfield-rollup-250-al",
+    "active": true,
+    "brand": "highfield",
+    "brandLabel": "Highfield",
+    "family": "rib",
+    "model": "Roll-Up 250 AL",
+    "category": "Roll-Up",
+    "seats": 3,
+    "image": "assets/images/highfield-rollup.webp",
+    "highlights": [
+      "250 cm",
+      "3 places",
+      "6 hp max",
+      "Plancher aluminium"
+    ],
+    "specs": {
+      "Dimensions": {
+        "Longueur hors-tout": "252 cm / 8'3\"",
+        "Longueur intérieure": "164 cm / 5'5\"",
+        "Largeur hors-tout": "158 cm / 5'2\"",
+        "Largeur intérieure": "71 cm / 2'4\"",
+        "Poids du bateau": "37 kg / 82 lbs"
+      },
+      "Flotteurs": {
+        "Diamètre des boudins": "43 cm / 17\"",
+        "Compartiments à air": "3"
+      },
+      "Capacité": {
+        "Charge maximale": "450 kg / 992 lbs",
+        "Personnes maximum": "3"
+      },
+      "Motorisation": {
+        "Puissance recommandée": "6 hp",
+        "Puissance maximale": "6 hp",
+        "Arbre moteur": "Court (S)"
+      },
+      "Construction": {
+        "Plancher": "Latté aluminium avec quille",
+        "Boudin": "PVC à coutures soudées (Hypalon en option)",
+        "Tableau arrière": "Aluminium chromaté et thermolaqué haute résistance"
+      },
+      "Coloris": {
+        "Disponibles": "Blanc (WH), Gris clair (LG)"
+      },
+      "Équipements de série": {
+        "· Clapets anti-retour affleurants": "Oui",
+        "· Banc amovible": "Oui",
+        "· Points de remorquage en patte d'oie": "Oui",
+        "· Liston léger": "Oui",
+        "· Pompe à pied, avirons et kit de réparation": "Oui"
+      },
+      "Options": {
+        "· Boudin Hypalon": "En option"
+      }
+    }
+  },
+  {
+    "id": "highfield-rollup-250-kam",
+    "active": true,
+    "brand": "highfield",
+    "brandLabel": "Highfield",
+    "family": "rib",
+    "model": "Roll-Up 250 KAM",
+    "category": "Roll-Up",
+    "seats": 3,
+    "image": "assets/images/highfield-rollup.webp",
+    "highlights": [
+      "250 cm",
+      "3 places",
+      "6 hp max",
+      "Plancher Airmat"
+    ],
+    "specs": {
+      "Dimensions": {
+        "Longueur hors-tout": "250 cm / 8'2\"",
+        "Longueur intérieure": "163 cm / 5'4\"",
+        "Largeur hors-tout": "161 cm / 5'3\"",
+        "Largeur intérieure": "71 cm / 2'4\"",
+        "Poids du bateau": "30 kg / 66 lbs"
+      },
+      "Flotteurs": {
+        "Diamètre des boudins": "43 cm / 17\"",
+        "Compartiments à air": "3"
+      },
+      "Capacité": {
+        "Charge maximale": "450 kg / 992 lbs",
+        "Personnes maximum": "3"
+      },
+      "Motorisation": {
+        "Puissance recommandée": "6 hp",
+        "Puissance maximale": "6 hp",
+        "Arbre moteur": "Court (S)"
+      },
+      "Construction": {
+        "Plancher": "Airmat (gonflable) avec quille",
+        "Boudin": "PVC à coutures soudées (Hypalon en option)",
+        "Tableau arrière": "Aluminium chromaté et thermolaqué haute résistance"
+      },
+      "Coloris": {
+        "Disponibles": "Blanc (WH), Gris clair (LG)"
+      },
+      "Équipements de série": {
+        "· Clapets anti-retour affleurants": "Oui",
+        "· Banc amovible": "Oui",
+        "· Points de remorquage en patte d'oie": "Oui",
+        "· Liston léger": "Oui",
+        "· Pompe à pied, avirons et kit de réparation": "Oui"
+      },
+      "Options": {
+        "· Boudin Hypalon": "En option"
+      }
+    }
+  },
+  {
+    "id": "highfield-rollup-280-al",
+    "active": true,
+    "brand": "highfield",
+    "brandLabel": "Highfield",
+    "family": "rib",
+    "model": "Roll-Up 280 AL",
+    "category": "Roll-Up",
+    "seats": 4,
+    "image": "assets/images/highfield-rollup.webp",
+    "highlights": [
+      "280 cm",
+      "4 places",
+      "10 hp max",
+      "Plancher aluminium"
+    ],
+    "specs": {
+      "Dimensions": {
+        "Longueur hors-tout": "280 cm / 9'2\"",
+        "Longueur intérieure": "194 cm / 6'4\"",
+        "Largeur hors-tout": "161 cm / 5'3\"",
+        "Largeur intérieure": "71 cm / 2'4\"",
+        "Poids du bateau": "42 kg / 93 lbs"
+      },
+      "Flotteurs": {
+        "Diamètre des boudins": "43 cm / 17\"",
+        "Compartiments à air": "3"
+      },
+      "Capacité": {
+        "Charge maximale": "500 kg / 1102 lbs",
+        "Personnes maximum": "4"
+      },
+      "Motorisation": {
+        "Puissance recommandée": "10 hp",
+        "Puissance maximale": "10 hp",
+        "Arbre moteur": "Court (S)"
+      },
+      "Construction": {
+        "Plancher": "Latté aluminium avec quille",
+        "Boudin": "PVC à coutures soudées (Hypalon en option)",
+        "Tableau arrière": "Aluminium chromaté et thermolaqué haute résistance"
+      },
+      "Coloris": {
+        "Disponibles": "Blanc (WH), Gris clair (LG)"
+      },
+      "Équipements de série": {
+        "· Clapets anti-retour affleurants": "Oui",
+        "· Banc amovible": "Oui",
+        "· Points de remorquage en patte d'oie": "Oui",
+        "· Liston léger": "Oui",
+        "· Pompe à pied, avirons et kit de réparation": "Oui"
+      },
+      "Options": {
+        "· Boudin Hypalon": "En option"
+      }
+    }
+  },
+  {
+    "id": "highfield-rollup-280-kam",
+    "active": true,
+    "brand": "highfield",
+    "brandLabel": "Highfield",
+    "family": "rib",
+    "model": "Roll-Up 280 KAM",
+    "category": "Roll-Up",
+    "seats": 4,
+    "image": "assets/images/highfield-rollup.webp",
+    "highlights": [
+      "280 cm",
+      "4 places",
+      "10 hp max",
+      "Plancher Airmat"
+    ],
+    "specs": {
+      "Dimensions": {
+        "Longueur hors-tout": "280 cm / 9'2\"",
+        "Longueur intérieure": "194 cm / 6'4\"",
+        "Largeur hors-tout": "161 cm / 5'3\"",
+        "Largeur intérieure": "71 cm / 2'4\"",
+        "Poids du bateau": "33 kg / 73 lbs"
+      },
+      "Flotteurs": {
+        "Diamètre des boudins": "43 cm / 17\"",
+        "Compartiments à air": "3"
+      },
+      "Capacité": {
+        "Charge maximale": "500 kg / 1102 lbs",
+        "Personnes maximum": "4"
+      },
+      "Motorisation": {
+        "Puissance recommandée": "8 hp",
+        "Puissance maximale": "10 hp",
+        "Arbre moteur": "Court (S)"
+      },
+      "Construction": {
+        "Plancher": "Airmat (gonflable) avec quille",
+        "Boudin": "PVC à coutures soudées (Hypalon en option)",
+        "Tableau arrière": "Aluminium chromaté et thermolaqué haute résistance"
+      },
+      "Coloris": {
+        "Disponibles": "Blanc (WH), Gris clair (LG)"
+      },
+      "Équipements de série": {
+        "· Clapets anti-retour affleurants": "Oui",
+        "· Banc amovible": "Oui",
+        "· Points de remorquage en patte d'oie": "Oui",
+        "· Liston léger": "Oui",
+        "· Pompe à pied, avirons et kit de réparation": "Oui"
+      },
+      "Options": {
+        "· Boudin Hypalon": "En option"
       }
     }
   }
