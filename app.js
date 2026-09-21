@@ -71,6 +71,56 @@
     window.addEventListener("pointerdown", goFullscreen, { once: true });
   }
 
+  // Diagnostic embarqué (?debug=1, en plus de ?kiosk=1) : petit badge en
+  // surimpression affichant le viewport réel et l'état des media queries
+  // borne, pour diagnostiquer le bug récurrent "2 colonnes au lieu de 3"
+  // sans dépendre d'un réglage Android externe. N'a aucun effet sans le
+  // paramètre debug=1 (jamais affiché en usage normal en boutique).
+  if (params.has("debug")) {
+    const mqPortraitFallback = window.matchMedia(
+      "(pointer: coarse) and (orientation: portrait) and (min-width: 500px) and (max-width: 900px)"
+    );
+    const mqLandscape3col = window.matchMedia(
+      "(pointer: coarse) and (orientation: landscape) and (min-width: 860px) and (max-width: 1279px)"
+    );
+    const mqPointerCoarse = window.matchMedia("(pointer: coarse)");
+    const mqPortrait = window.matchMedia("(orientation: portrait)");
+
+    const badge = document.createElement("div");
+    badge.id = "mcDebugBadge";
+    badge.style.cssText = [
+      "position:fixed", "top:4px", "left:4px", "z-index:999999",
+      "background:rgba(0,0,0,.82)", "color:#0f0", "font:11px/1.4 monospace",
+      "padding:6px 8px", "border-radius:6px", "pointer-events:none",
+      "white-space:pre", "max-width:70vw", "overflow:auto"
+    ].join(";");
+    document.documentElement.appendChild(badge);
+
+    const refresh = () => {
+      const catalogEl = document.querySelector(".catalog");
+      const catalogCols = catalogEl ? getComputedStyle(catalogEl).gridTemplateColumns : "(pas de .catalog)";
+      const bodyTransform = getComputedStyle(document.body).transform;
+      const lines = [
+        `innerWidth x innerHeight: ${window.innerWidth} x ${window.innerHeight}`,
+        `screen.width x height: ${screen.width} x ${screen.height}`,
+        `devicePixelRatio: ${window.devicePixelRatio}`,
+        `screen.orientation.type: ${(screen.orientation && screen.orientation.type) || "n/a"}`,
+        `matchMedia orientation:portrait: ${mqPortrait.matches}`,
+        `matchMedia pointer:coarse: ${mqPointerCoarse.matches}`,
+        `matchMedia fallback-portrait-css (v018): ${mqPortraitFallback.matches}`,
+        `matchMedia landscape-3col-css: ${mqLandscape3col.matches}`,
+        `body transform (calculé): ${bodyTransform}`,
+        `.catalog grid-template-columns (calculé): ${catalogCols}`,
+        `data-mode: ${document.body.dataset.mode}`
+      ];
+      badge.textContent = lines.join("\n");
+    };
+    refresh();
+    window.addEventListener("resize", refresh);
+    window.addEventListener("orientationchange", refresh);
+    setInterval(refresh, 500);
+  }
+
   /* ---------- Utilitaires -------------------------------------------- */
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => Array.from(root.querySelectorAll(s));
