@@ -2076,6 +2076,14 @@ window.MC_VEHICLES = [
     "category": "Patrol",
     "seats": 8,
     "image": "assets/images/highfield-patrol-420.webp",
+    "gallery": [
+      "assets/images/highfield-patrol-420-g1.webp",
+      "assets/images/highfield-patrol-420-g2.webp",
+      "assets/images/highfield-patrol-420-g3.webp",
+      "assets/images/highfield-patrol-420-g4.webp",
+      "assets/images/highfield-patrol-420-g5.webp",
+      "assets/images/highfield-patrol-420-g6.webp"
+    ],
     "highlights": [
       "421 cm",
       "8 places",
@@ -2139,6 +2147,14 @@ window.MC_VEHICLES = [
     "category": "Patrol",
     "seats": 9,
     "image": "assets/images/highfield-patrol-460.webp",
+    "gallery": [
+      "assets/images/highfield-patrol-460-g1.webp",
+      "assets/images/highfield-patrol-460-g2.webp",
+      "assets/images/highfield-patrol-460-g3.webp",
+      "assets/images/highfield-patrol-460-g4.webp",
+      "assets/images/highfield-patrol-460-g5.webp",
+      "assets/images/highfield-patrol-460-g6.webp"
+    ],
     "highlights": [
       "459 cm",
       "9 places",
@@ -2202,6 +2218,14 @@ window.MC_VEHICLES = [
     "category": "Patrol",
     "seats": 10,
     "image": "assets/images/highfield-patrol-500.webp",
+    "gallery": [
+      "assets/images/highfield-patrol-500-g1.webp",
+      "assets/images/highfield-patrol-500-g2.webp",
+      "assets/images/highfield-patrol-500-g3.webp",
+      "assets/images/highfield-patrol-500-g4.webp",
+      "assets/images/highfield-patrol-500-g5.webp",
+      "assets/images/highfield-patrol-500-g6.webp"
+    ],
     "highlights": [
       "500 cm",
       "10 places",
@@ -2265,6 +2289,14 @@ window.MC_VEHICLES = [
     "category": "Patrol",
     "seats": 12,
     "image": "assets/images/highfield-patrol-540.webp",
+    "gallery": [
+      "assets/images/highfield-patrol-540-g1.webp",
+      "assets/images/highfield-patrol-540-g2.webp",
+      "assets/images/highfield-patrol-540-g3.webp",
+      "assets/images/highfield-patrol-540-g4.webp",
+      "assets/images/highfield-patrol-540-g5.webp",
+      "assets/images/highfield-patrol-540-g6.webp"
+    ],
     "highlights": [
       "540 cm",
       "12 places",
@@ -2328,6 +2360,14 @@ window.MC_VEHICLES = [
     "category": "Patrol",
     "seats": 14,
     "image": "assets/images/highfield-patrol-600.webp",
+    "gallery": [
+      "assets/images/highfield-patrol-600-g1.webp",
+      "assets/images/highfield-patrol-600-g2.webp",
+      "assets/images/highfield-patrol-600-g3.webp",
+      "assets/images/highfield-patrol-600-g4.webp",
+      "assets/images/highfield-patrol-600-g5.webp",
+      "assets/images/highfield-patrol-600-g6.webp"
+    ],
     "highlights": [
       "617 cm",
       "14 places",
@@ -2391,6 +2431,14 @@ window.MC_VEHICLES = [
     "category": "Patrol",
     "seats": 13,
     "image": "assets/images/highfield-patrol-660.webp",
+    "gallery": [
+      "assets/images/highfield-patrol-660-g1.webp",
+      "assets/images/highfield-patrol-660-g2.webp",
+      "assets/images/highfield-patrol-660-g3.webp",
+      "assets/images/highfield-patrol-660-g4.webp",
+      "assets/images/highfield-patrol-660-g5.webp",
+      "assets/images/highfield-patrol-660-g6.webp"
+    ],
     "highlights": [
       "651 cm",
       "13 places",
@@ -2455,6 +2503,14 @@ window.MC_VEHICLES = [
     "category": "Patrol",
     "seats": 14,
     "image": "assets/images/highfield-patrol-700.webp",
+    "gallery": [
+      "assets/images/highfield-patrol-700-g1.webp",
+      "assets/images/highfield-patrol-700-g2.webp",
+      "assets/images/highfield-patrol-700-g3.webp",
+      "assets/images/highfield-patrol-700-g4.webp",
+      "assets/images/highfield-patrol-700-g5.webp",
+      "assets/images/highfield-patrol-700-g6.webp"
+    ],
     "highlights": [
       "699 cm",
       "14 places",
@@ -2520,6 +2576,14 @@ window.MC_VEHICLES = [
     "category": "Patrol",
     "seats": 16,
     "image": "assets/images/highfield-patrol-760.webp",
+    "gallery": [
+      "assets/images/highfield-patrol-760-g1.webp",
+      "assets/images/highfield-patrol-760-g2.webp",
+      "assets/images/highfield-patrol-760-g3.webp",
+      "assets/images/highfield-patrol-760-g4.webp",
+      "assets/images/highfield-patrol-760-g5.webp",
+      "assets/images/highfield-patrol-760-g6.webp"
+    ],
     "highlights": [
       "764 cm",
       "16 places",
@@ -2585,6 +2649,14 @@ window.MC_VEHICLES = [
     "category": "Patrol",
     "seats": 19,
     "image": "assets/images/highfield-patrol-860.webp",
+    "gallery": [
+      "assets/images/highfield-patrol-860-g1.webp",
+      "assets/images/highfield-patrol-860-g2.webp",
+      "assets/images/highfield-patrol-860-g3.webp",
+      "assets/images/highfield-patrol-860-g4.webp",
+      "assets/images/highfield-patrol-860-g5.webp",
+      "assets/images/highfield-patrol-860-g6.webp"
+    ],
     "highlights": [
       "870 cm",
       "19 places",
