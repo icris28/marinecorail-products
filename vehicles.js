@@ -95,8 +95,8 @@ window.MC_VEHICLES = [
     "seats": 1,
     "image": "assets/images/seadoo-rxp-x-350-2027.webp",
     "colors": [
-      "Orange solaire métallique haut de gamme",
-      "Bleu océan"
+      { "name": "Orange solaire métallique haut de gamme", "image": "assets/images/seadoo-rxp-x-350-2027-c0.webp" },
+      { "name": "Bleu océan", "image": "assets/images/seadoo-rxp-x-350-2027-c1.webp" }
     ],
     "highlights": [
       "350 ch",
@@ -237,8 +237,8 @@ window.MC_VEHICLES = [
     "seats": 3,
     "image": "assets/images/seadoo-rxt-x-350-2027.webp",
     "colors": [
-      "Orange solaire métallique haut de gamme",
-      "Bleu océan"
+      { "name": "Orange solaire métallique haut de gamme", "image": "assets/images/seadoo-rxt-x-350-2027-c0.webp" },
+      { "name": "Bleu océan", "image": "assets/images/seadoo-rxt-x-350-2027-c1.webp" }
     ],
     "highlights": [
       "350 ch",
@@ -311,8 +311,8 @@ window.MC_VEHICLES = [
     "seats": 1,
     "image": "assets/images/seadoo-spark-x-trixx-1up-2027.webp",
     "colors": [
-      "Bleu brume et Éclat de corail",
-      "Bleu océan et Orange crush"
+      { "name": "Bleu brume et Éclat de corail", "image": "assets/images/seadoo-spark-x-trixx-1up-2027-c0.webp" },
+      { "name": "Bleu océan et Orange crush", "image": "assets/images/seadoo-spark-x-trixx-1up-2027-c1.webp" }
     ],
     "highlights": [
       "110 ch",
@@ -381,8 +381,8 @@ window.MC_VEHICLES = [
     "seats": 3,
     "image": "assets/images/seadoo-spark-x-trixx-3up-2027.webp",
     "colors": [
-      "Bleu brume et Éclat de corail",
-      "Bleu océan et Orange crush"
+      { "name": "Bleu brume et Éclat de corail", "image": "assets/images/seadoo-spark-x-trixx-3up-2027-c0.webp" },
+      { "name": "Bleu océan et Orange crush", "image": "assets/images/seadoo-spark-x-trixx-3up-2027-c1.webp" }
     ],
     "highlights": [
       "110 ch",
@@ -747,8 +747,8 @@ window.MC_VEHICLES = [
     "seats": 3,
     "image": "assets/images/seadoo-gtx-limited-350-2027.webp",
     "colors": [
-      "Bleu minéral",
-      "Blanc perlé haut de gamme"
+      { "name": "Bleu minéral", "image": "assets/images/seadoo-gtx-limited-350-2027-c0.webp" },
+      { "name": "Blanc perlé haut de gamme", "image": "assets/images/seadoo-gtx-limited-350-2027-c1.webp" }
     ],
     "highlights": [
       "350 ch",
@@ -2713,6 +2713,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 5,
     "image": "assets/images/highfield-sport-330.webp",
+    "gallery": [
+      "assets/images/highfield-sport-330-g1.webp",
+      "assets/images/highfield-sport-330-g2.webp",
+      "assets/images/highfield-sport-330-g3.webp",
+      "assets/images/highfield-sport-330-g4.webp",
+      "assets/images/highfield-sport-330-g5.webp",
+      "assets/images/highfield-sport-330-g6.webp"
+    ],
     "highlights": [
       "336 cm",
       "5 places",
@@ -2776,6 +2784,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 6,
     "image": "assets/images/highfield-sport-360.webp",
+    "gallery": [
+      "assets/images/highfield-sport-360-g1.webp",
+      "assets/images/highfield-sport-360-g2.webp",
+      "assets/images/highfield-sport-360-g3.webp",
+      "assets/images/highfield-sport-360-g4.webp",
+      "assets/images/highfield-sport-360-g5.webp",
+      "assets/images/highfield-sport-360-g6.webp"
+    ],
     "highlights": [
       "362 cm",
       "6 places",
@@ -2839,6 +2855,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 8,
     "image": "assets/images/highfield-sport-420.webp",
+    "gallery": [
+      "assets/images/highfield-sport-420-g1.webp",
+      "assets/images/highfield-sport-420-g2.webp",
+      "assets/images/highfield-sport-420-g3.webp",
+      "assets/images/highfield-sport-420-g4.webp",
+      "assets/images/highfield-sport-420-g5.webp",
+      "assets/images/highfield-sport-420-g6.webp"
+    ],
     "highlights": [
       "424 cm",
       "8 places",
@@ -2905,6 +2929,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 9,
     "image": "assets/images/highfield-sport-460.webp",
+    "gallery": [
+      "assets/images/highfield-sport-460-g1.webp",
+      "assets/images/highfield-sport-460-g2.webp",
+      "assets/images/highfield-sport-460-g3.webp",
+      "assets/images/highfield-sport-460-g4.webp",
+      "assets/images/highfield-sport-460-g5.webp",
+      "assets/images/highfield-sport-460-g6.webp"
+    ],
     "highlights": [
       "460 cm",
       "9 places",
@@ -2971,6 +3003,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 10,
     "image": "assets/images/highfield-sport-520.webp",
+    "gallery": [
+      "assets/images/highfield-sport-520-g1.webp",
+      "assets/images/highfield-sport-520-g2.webp",
+      "assets/images/highfield-sport-520-g3.webp",
+      "assets/images/highfield-sport-520-g4.webp",
+      "assets/images/highfield-sport-520-g5.webp",
+      "assets/images/highfield-sport-520-g6.webp"
+    ],
     "highlights": [
       "523 cm",
       "10 places",
@@ -3036,6 +3076,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 12,
     "image": "assets/images/highfield-sport-560.webp",
+    "gallery": [
+      "assets/images/highfield-sport-560-g1.webp",
+      "assets/images/highfield-sport-560-g2.webp",
+      "assets/images/highfield-sport-560-g3.webp",
+      "assets/images/highfield-sport-560-g4.webp",
+      "assets/images/highfield-sport-560-g5.webp",
+      "assets/images/highfield-sport-560-g6.webp"
+    ],
     "highlights": [
       "586 cm",
       "12 places",
@@ -3167,6 +3215,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 14,
     "image": "assets/images/highfield-sport-660.webp",
+    "gallery": [
+      "assets/images/highfield-sport-660-g1.webp",
+      "assets/images/highfield-sport-660-g2.webp",
+      "assets/images/highfield-sport-660-g3.webp",
+      "assets/images/highfield-sport-660-g4.webp",
+      "assets/images/highfield-sport-660-g5.webp",
+      "assets/images/highfield-sport-660-g6.webp"
+    ],
     "highlights": [
       "665 cm",
       "14 places",
@@ -3226,6 +3282,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 16,
     "image": "assets/images/highfield-sport-760.webp",
+    "gallery": [
+      "assets/images/highfield-sport-760-g1.webp",
+      "assets/images/highfield-sport-760-g2.webp",
+      "assets/images/highfield-sport-760-g3.webp",
+      "assets/images/highfield-sport-760-g4.webp",
+      "assets/images/highfield-sport-760-g5.webp",
+      "assets/images/highfield-sport-760-g6.webp"
+    ],
     "highlights": [
       "777 cm",
       "16 places",
@@ -3285,6 +3349,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 15,
     "image": "assets/images/highfield-sport-800.webp",
+    "gallery": [
+      "assets/images/highfield-sport-800-g1.webp",
+      "assets/images/highfield-sport-800-g2.webp",
+      "assets/images/highfield-sport-800-g3.webp",
+      "assets/images/highfield-sport-800-g4.webp",
+      "assets/images/highfield-sport-800-g5.webp",
+      "assets/images/highfield-sport-800-g6.webp"
+    ],
     "highlights": [
       "812 cm",
       "15 places",
@@ -3344,6 +3416,14 @@ window.MC_VEHICLES = [
     "category": "Sport",
     "seats": 19,
     "image": "assets/images/highfield-sport-900.webp",
+    "gallery": [
+      "assets/images/highfield-sport-900-g1.webp",
+      "assets/images/highfield-sport-900-g2.webp",
+      "assets/images/highfield-sport-900-g3.webp",
+      "assets/images/highfield-sport-900-g4.webp",
+      "assets/images/highfield-sport-900-g5.webp",
+      "assets/images/highfield-sport-900-g6.webp"
+    ],
     "highlights": [
       "912 cm",
       "19 places",

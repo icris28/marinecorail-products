@@ -116,12 +116,12 @@
 
     const colors = v.colors || [];
     if (colors.length === 0) return "";
-    if (colors.length === 1) return `<div class="${cls}">Coloris : ${esc(colors[0])}</div>`;
+    if (colors.length === 1) return `<div class="${cls}">Coloris : ${esc(colors[0].name)}</div>`;
 
     const idx = state.colorChoice[v.id] ?? 0;
     const options = colors.map((c, i) => `
       <button type="button" class="color-swatch ${i === idx ? "is-active" : ""}"
-              data-color-pick="${esc(v.id)}:${i}" aria-pressed="${i === idx}">${esc(c)}</button>`
+              data-color-pick="${esc(v.id)}:${i}" aria-pressed="${i === idx}">${esc(c.name)}</button>`
     ).join("");
     return `<div class="${cls} has-color-picker">
       <span class="color-picker-label">Coloris :</span>
@@ -167,10 +167,47 @@
     return `<div class="placeholder" aria-hidden="true"><svg viewBox="0 0 120 72">${shape}</svg><small>Visuel à venir</small></div>`;
   }
 
+  // Photo à afficher pour ce véhicule : celle du coloris choisi si un
+  // sélecteur de coloris est actif (v.colors à 2+ entrées avec image, et pas
+  // de coloris d'unité réelle déjà fixé dans l'inventaire), sinon la photo
+  // principale de la fiche.
+  function currentImage(v) {
+    const inv = inventoryOf(v.id);
+    if (!inv.color) {
+      const colors = v.colors || [];
+      if (colors.length > 1) {
+        const chosen = colors[state.colorChoice[v.id] ?? 0];
+        if (chosen && chosen.image) return chosen.image;
+      }
+    }
+    return v.image;
+  }
+
   // Image officielle si présente, sinon placeholder de marque (sans erreur visible).
   function visualHTML(v) {
-    if (!v.image) return placeholderHTML(v);
-    return `<img src="${esc(v.image)}" alt="${esc(v.brandLabel + " " + v.model)}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{innerHTML:this.dataset.fallback}).firstChild)" data-fallback="${esc(placeholderHTML(v))}">`;
+    const img = currentImage(v);
+    if (!img) return placeholderHTML(v);
+    return `<img src="${esc(img)}" alt="${esc(v.brandLabel + " " + v.model)}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{innerHTML:this.dataset.fallback}).firstChild)" data-fallback="${esc(placeholderHTML(v))}">`;
+  }
+
+  // Carrousel photo pour la fiche détaillée (v.gallery, ex. gamme Highfield
+  // Sport) : null si le modèle n'a pas de galerie, pour que l'appelant
+  // retombe sur visualHTML(v) (une seule photo, comme avant).
+  function galleryHTML(v) {
+    const gallery = v.gallery || [];
+    if (gallery.length === 0) return null;
+    const slides = gallery.map((src, i) => `
+      <div class="gallery-slide">
+        <img src="${esc(src)}" alt="${esc(v.brandLabel + " " + v.model)} – photo ${i + 1}/${gallery.length}" loading="${i === 0 ? "eager" : "lazy"}">
+      </div>`).join("");
+    const dots = gallery.map((_, i) => `
+      <button type="button" class="gallery-dot ${i === 0 ? "is-active" : ""}" data-gallery-dot="${i}" aria-label="Photo ${i + 1}"></button>`).join("");
+    return `<div class="detail-gallery">
+      <div class="gallery-track">${slides}</div>
+      <button type="button" class="gallery-nav gallery-prev" data-gallery-prev aria-label="Photo précédente">‹</button>
+      <button type="button" class="gallery-nav gallery-next" data-gallery-next aria-label="Photo suivante">›</button>
+      <div class="gallery-dots">${dots}</div>
+    </div>`;
   }
 
   /* ---------- Panneaux modaux (sans <dialog>) ------------------------ */
@@ -354,7 +391,7 @@
     if (state.status !== "all" && inv.status !== state.status) return false;
     if (state.seats !== "all" && String(v.seats) !== state.seats) return false;
     if (state.query) {
-      const hay = [v.brandLabel, v.model, v.year, v.category, inv.color, ...(v.colors || []), ...(v.highlights || [])]
+      const hay = [v.brandLabel, v.model, v.year, v.category, inv.color, ...(v.colors || []).map(c => c.name), ...(v.highlights || [])]
         .concat(Object.values(v.specs || {}).flatMap(sec => Object.values(sec)))
         .join(" ").toLowerCase();
       if (!hay.includes(state.query)) return false;
@@ -438,7 +475,7 @@
     $("#detailShell").className = `dialog-shell ${v.brand}`;
     $("#detailContent").innerHTML = `
 <div class="detail-head">
-  <div class="detail-visual">${visualHTML(v)}</div>
+  <div class="detail-visual ${(v.gallery && v.gallery.length) ? "has-gallery" : ""}">${galleryHTML(v) || visualHTML(v)}</div>
   <div>
     <span class="brand-badge">${esc(v.brandLabel)}</span>
     <h2 class="detail-title" id="detailTitle">${esc(v.model)}</h2>
@@ -464,6 +501,36 @@ ${sections}
       state.colorChoice[cid] = Number(idx);
       openDetail(id); // rafraîchit la fiche avec le coloris choisi
     }));
+
+    // Carrousel photo (v.gallery) : boutons préc/suivant + puces cliquables,
+    // et les puces suivent aussi un balayage tactile manuel sur la piste.
+    const galleryEl = $(".detail-gallery", $("#detailContent"));
+    if (galleryEl) {
+      const track = $(".gallery-track", galleryEl);
+      const slides = $$(".gallery-slide", galleryEl);
+      const dots = $$(".gallery-dot", galleryEl);
+      let idx = 0;
+      const setActive = i => { idx = i; dots.forEach((d, di) => d.classList.toggle("is-active", di === idx)); };
+      const goTo = i => {
+        setActive(Math.max(0, Math.min(slides.length - 1, i)));
+        slides[idx].scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+      };
+      $(".gallery-prev", galleryEl).addEventListener("click", () => goTo(idx - 1));
+      $(".gallery-next", galleryEl).addEventListener("click", () => goTo(idx + 1));
+      dots.forEach((d, i) => d.addEventListener("click", () => goTo(i)));
+      let scrollTimer;
+      track.addEventListener("scroll", () => {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          let closest = 0, closestDist = Infinity;
+          slides.forEach((s, i) => {
+            const dist = Math.abs(s.offsetLeft - track.scrollLeft);
+            if (dist < closestDist) { closestDist = dist; closest = i; }
+          });
+          setActive(closest);
+        }, 100);
+      });
+    }
 
     modalOpen($("#detailDialog"));
   }

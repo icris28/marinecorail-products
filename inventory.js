@@ -133,7 +133,7 @@ window.MC_INVENTORY = {
     "status": "commande"
   },
   "highfield-sport-300": {
-    "status": "commande"
+    "status": "rupture"
   },
   "highfield-sport-330": {
     "status": "commande"
@@ -154,7 +154,7 @@ window.MC_INVENTORY = {
     "status": "stock"
   },
   "highfield-sport-600": {
-    "status": "commande"
+    "status": "rupture"
   },
   "highfield-sport-660": {
     "status": "commande"
