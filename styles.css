@@ -277,6 +277,18 @@ body[data-tone="dark"] .mc-logo {
 .price.na { font-size: 18px; font-weight: 700; color: var(--card-muted, var(--muted)); }
 .price small { font-size: 13px; font-weight: 700; margin-left: 4px; color: var(--card-muted, var(--muted)); }
 
+/* Prix indicatif "à partir de" (Highfield fabriqués à la commande) : même
+   taille/poids relatifs dans les 3 contextes d'affichage du prix (carte,
+   fiche détaillée, comparateur) grâce à l'unité em. */
+.price-approx-label, .detail-price .price-approx-label, .cmp-price .price-approx-label {
+  display: block;
+  font-size: .42em;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--card-muted, var(--muted));
+}
+
 .status {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em;

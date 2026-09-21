@@ -1727,7 +1727,7 @@ window.MC_VEHICLES = [
     }
   },
   {
-    "id": "highfield-classic-380",
+    "id": "highfield-classic-380-pvc",
     "active": true,
     "brand": "highfield",
     "brandLabel": "Highfield",
@@ -1738,6 +1738,7 @@ window.MC_VEHICLES = [
     "image": "assets/images/highfield-classic-380.webp",
     "highlights": [
       "380 cm",
+      "Flotteur PVC",
       "7 places",
       "jusqu'à 30 hp",
       "Coque aluminium"
@@ -1765,10 +1766,76 @@ window.MC_VEHICLES = [
       },
       "Construction": {
         "Coque": "Aluminium haute résistance chromaté et thermolaqué",
-        "Boudins": "ORCA Hypalon ou PVC"
+        "Boudins": "Flotteur PVC"
       },
       "Équipements de série": {
-        "· Boudins ORCA Hypalon ou PVC": "Oui",
+        "· Boudins PVC, coutures soudées": "Oui",
+        "· Clapets anti-retour affleurants": "Oui",
+        "· Coque aluminium haute résistance, chromatée et thermolaquée": "Oui",
+        "· Coffre avant (réservoir 24 L)": "Oui",
+        "· Supports de tableau arrière intégrés": "Oui",
+        "· Banquette amovible": "Oui",
+        "· Coussin de pointe avant": "Oui",
+        "· Points de levage et anneaux de remorquage": "Oui",
+        "· Points de remorquage en patte d'oie": "Oui",
+        "· Pont finition teck moussé brossé": "Oui",
+        "· Liston renforcé": "Oui",
+        "· Protection de quille sur toute la longueur": "Oui",
+        "· Sangles de réservoir": "Oui",
+        "· Sacoche sous banquette": "Oui"
+      },
+      "Options": {
+        "· Options de console": "En option",
+        "· Marche d'étrave FRP/Nylon": "En option",
+        "· Taquet d'étrave moulé": "En option",
+        "· Taud de bateau": "En option"
+      }
+    }
+  },
+  {
+    "id": "highfield-classic-380-hypalon",
+    "active": true,
+    "brand": "highfield",
+    "brandLabel": "Highfield",
+    "family": "rib",
+    "model": "Classic 380",
+    "category": "Classic",
+    "seats": 7,
+    "image": "assets/images/highfield-classic-380.webp",
+    "highlights": [
+      "380 cm",
+      "Flotteur ORCA Hypalon",
+      "7 places",
+      "jusqu'à 30 hp",
+      "Coque aluminium"
+    ],
+    "specs": {
+      "Dimensions": {
+        "Longueur hors-tout": "380 cm",
+        "Longueur intérieure": "287 cm",
+        "Largeur hors-tout": "170 cm",
+        "Largeur intérieure": "79 cm",
+        "V de carène": "15°",
+        "Poids du bateau": "83 kg"
+      },
+      "Flotteurs": {
+        "Diamètre des boudins": "44 cm",
+        "Compartiments à air": "3"
+      },
+      "Capacité": {
+        "Charge maximale": "637 kg",
+        "Personnes maximum": "7"
+      },
+      "Motorisation": {
+        "Puissance maximale": "30 hp",
+        "Arbre moteur": "Court (S)"
+      },
+      "Construction": {
+        "Coque": "Aluminium haute résistance chromaté et thermolaqué",
+        "Boudins": "Flotteur ORCA Hypalon"
+      },
+      "Équipements de série": {
+        "· Boudins ORCA Hypalon": "Oui",
         "· Clapets anti-retour affleurants": "Oui",
         "· Coque aluminium haute résistance, chromatée et thermolaquée": "Oui",
         "· Coffre avant (réservoir 24 L)": "Oui",

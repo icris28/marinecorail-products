@@ -6,7 +6,7 @@
 
 window.MC_INVENTORY = {
   "seadoo-gtr-x-300-2027": {
-    "status": "precommande"
+    "status": "rupture"
   },
   "seadoo-rxp-x-350-2027": {
     "status": "precommande"
@@ -45,7 +45,7 @@ window.MC_INVENTORY = {
     "status": "precommande"
   },
   "seadoo-gtx-300-2027": {
-    "status": "precommande"
+    "status": "rupture"
   },
   "seadoo-wake-pro-230-2027": {
     "status": "precommande"
@@ -66,35 +66,38 @@ window.MC_INVENTORY = {
     "color": "Bleu vapeur / Jaune néon"
   },
   "canam-outlander-electric-2027": {
-    "status": "stock",
+    "status": "precommande",
     "quantity": 1,
     "color": "À préciser"
   },
   "canam-outlander-max-electric-2027": {
-    "status": "stock",
+    "status": "precommande",
     "quantity": 1,
     "color": "À préciser"
   },
   "highfield-classic-260": {
-    "status": "commande"
+    "status": "precommande"
   },
   "highfield-classic-290": {
-    "status": "commande"
+    "status": "precommande"
   },
   "highfield-classic-310": {
-    "status": "commande"
+    "status": "precommande"
   },
   "highfield-classic-340": {
-    "status": "commande"
+    "status": "precommande"
   },
   "highfield-classic-360": {
-    "status": "commande"
+    "status": "stock"
   },
-  "highfield-classic-380": {
-    "status": "commande"
+  "highfield-classic-380-pvc": {
+    "status": "precommande"
+  },
+  "highfield-classic-380-hypalon": {
+    "status": "precommande"
   },
   "highfield-classic-400": {
-    "status": "commande"
+    "status": "precommande"
   },
   "highfield-classic-420": {
     "status": "commande"
@@ -148,7 +151,7 @@ window.MC_INVENTORY = {
     "status": "commande"
   },
   "highfield-sport-560": {
-    "status": "commande"
+    "status": "stock"
   },
   "highfield-sport-600": {
     "status": "commande"
@@ -166,31 +169,31 @@ window.MC_INVENTORY = {
     "status": "commande"
   },
   "highfield-ultralite-220": {
-    "status": "commande"
+    "status": "rupture"
   },
   "highfield-ultralite-240": {
-    "status": "commande"
+    "status": "stock"
   },
   "highfield-ultralite-260": {
-    "status": "commande"
+    "status": "stock"
   },
   "highfield-ultralite-290": {
-    "status": "commande"
+    "status": "precommande"
   },
   "highfield-ultralite-310": {
-    "status": "commande"
+    "status": "stock"
   },
   "highfield-ultralite-340": {
-    "status": "commande"
+    "status": "precommande"
   },
   "epropulsion-elite": {
-    "status": "commande"
+    "status": "stock"
   },
   "epropulsion-spirit-1-0-plus-extra-court": {
-    "status": "commande"
+    "status": "stock"
   },
   "epropulsion-spirit-1-0-evo-court": {
-    "status": "commande"
+    "status": "stock"
   },
   "highfield-adv-7": {
     "status": "commande"
@@ -199,21 +202,21 @@ window.MC_INVENTORY = {
     "status": "commande"
   },
   "highfield-rollup-230-al": {
-    "status": "commande"
+    "status": "stock"
   },
   "highfield-rollup-230-kam": {
-    "status": "commande"
+    "status": "stock"
   },
   "highfield-rollup-250-al": {
-    "status": "commande"
+    "status": "stock"
   },
   "highfield-rollup-250-kam": {
-    "status": "commande"
+    "status": "stock"
   },
   "highfield-rollup-280-al": {
-    "status": "commande"
+    "status": "precommande"
   },
   "highfield-rollup-280-kam": {
-    "status": "commande"
+    "status": "precommande"
   },
 };

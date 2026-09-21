@@ -77,10 +77,17 @@
   window.formatXPF = formatXPF;
 
   function priceHTML(id, cls) {
-    const formatted = formatXPF(PRICES[id]);
-    return formatted
-      ? `<div class="${cls}">${esc(formatted)}<small>TTC</small></div>`
-      : `<div class="${cls} na">Prix sur demande</div>`;
+    // PRICES[id] est soit un nombre (prix ferme), soit null (prix sur
+    // demande), soit { from: <nombre> } pour un prix indicatif "à partir de"
+    // (modèles fabriqués/livrés à la commande dont le tarif dépend de la
+    // motorisation/des options).
+    const entry = PRICES[id];
+    const estApprox = entry != null && typeof entry === "object";
+    const montant = estApprox ? entry.from : entry;
+    const formatted = formatXPF(montant);
+    if (!formatted) return `<div class="${cls} na">Prix sur demande</div>`;
+    const prefixe = estApprox ? `<span class="price-approx-label">À partir de</span>` : "";
+    return `<div class="${cls}">${prefixe}${esc(formatted)}<small>TTC</small></div>`;
   }
 
   function inventoryOf(id) {
