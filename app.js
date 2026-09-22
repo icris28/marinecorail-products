@@ -54,14 +54,17 @@
       if (!document.fullscreenElement && root.requestFullscreen) {
         root.requestFullscreen()
           .then(() => {
-            // Verrouille l'orientation paysage : la borne est montée en
-            // paysage, mais la rotation auto Android peut parfois la faire
-            // basculer en portrait (grille à 2 colonnes au lieu de 3). L'API
-            // Screen Orientation n'est utilisable qu'en plein écran sur la
-            // plupart des navigateurs, d'où l'enchaînement ici. Best-effort :
-            // pas supportée partout, échoue en silence si indisponible.
+            // Verrouille l'orientation portrait : la borne reste
+            // volontairement montée en vertical (confirmé par Christophe le
+            // 22/09, après une tentative précédente erronée de forcer le
+            // paysage — cf. doc de suivi). Ce verrou évite juste qu'une
+            // rotation auto Android accidentelle ne fasse basculer l'écran
+            // en paysage. L'API Screen Orientation n'est utilisable qu'en
+            // plein écran sur la plupart des navigateurs, d'où l'enchaînement
+            // ici. Best-effort : pas supportée partout, échoue en silence si
+            // indisponible.
             if (screen.orientation && screen.orientation.lock) {
-              screen.orientation.lock("landscape").catch(() => {});
+              screen.orientation.lock("portrait").catch(() => {});
             }
           })
           .catch(() => {});

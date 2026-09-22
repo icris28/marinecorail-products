@@ -679,36 +679,24 @@ body[data-mode="kiosk"] .cmp-model { font-size: 20px; }
   body[data-mode="kiosk"] .vehicle-body { padding: 12px 16px 14px; gap: 8px; }
 }
 
-/* ---- Repli si la borne repart en portrait malgré le verrou JS (22/09) ----
-   screen.orientation.lock("landscape") (app.js) est best-effort et ne suffit
-   pas toujours sur cette borne. Ce repli est purement CSS, donc indépendant
-   du support de l'API Screen Orientation par le WebView : dès que le mode
-   borne détecte un viewport en portrait dans une plage plausible pour cette
-   tablette (mesuré 727×1291 le 22/09), toute la page est pivotée
-   visuellement à 90° pour se présenter en paysage. Les éléments en position
-   fixed (modales, plateau comparateur) suivent automatiquement : un
-   `transform` sur body[data-mode="kiosk"] en fait leur bloc englobant.
-   PAS de condition (pointer: coarse) (retirée en v020, même diagnostic que
-   la media query paysage juste au-dessus : cf. commentaire dessus). */
+/* ---- Grille catalogue en portrait (22/09, réécrit v021) ----
+   Christophe a confirmé le 22/09 que la borne reste VOLONTAIREMENT montée en
+   portrait — ce n'est pas une rotation accidentelle à corriger. Les v016
+   (verrou JS vers landscape) et v018 (rotation CSS 90° pour SIMULER le
+   paysage) partaient de l'hypothèse inverse et sont retirés : app.js
+   verrouille maintenant vers "portrait" (pas "landscape"), et cette media
+   query n'essaie plus de faire pivoter visuellement la page — elle fixe
+   simplement une grille à 2 colonnes explicite pour la largeur portrait
+   mesurée sur cette tablette (727px), plutôt que de dépendre du fallback
+   générique auto-fill qui donnait 2 colonnes par coïncidence de
+   dimensionnement. `.modal.wide .modal-box` n'a plus besoin d'un override
+   96vh : sans rotation, `96vw` de la règle de base désigne déjà la vraie
+   largeur portrait. */
 @media (orientation: portrait) and (min-width: 500px) and (max-width: 900px) {
-  body[data-mode="kiosk"] {
-    position: fixed;
-    top: 0;
-    left: 100%;
-    width: 100vh;
-    height: 100vw;
-    transform-origin: top left;
-    transform: rotate(90deg);
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
   body[data-mode="kiosk"] .catalog {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
   body[data-mode="kiosk"] .vehicle-visual { min-height: 170px; max-height: 210px; }
   body[data-mode="kiosk"] .vehicle-body { padding: 12px 16px 14px; gap: 8px; }
-  /* 96vw visait la largeur visuelle une fois à plat ; une fois pivoté c'est
-     la hauteur réelle du viewport (100vh ci-dessus) qui joue ce rôle. */
-  body[data-mode="kiosk"] .modal.wide .modal-box { max-width: min(1700px, 96vh); }
 }
