@@ -659,8 +659,18 @@ body[data-mode="kiosk"] .cmp-model { font-size: 20px; }
    3 colonnes pleine largeur avec de grandes photos, chrome minimal. Bornée
    à une plage plutôt qu'à 1024px pile : encaisse un écart de quelques
    pixels (barre navigateur, arrondi) sans revenir brutalement à l'auto-fill
-   générique ci-dessus. */
-@media (pointer: coarse) and (orientation: landscape) and (min-width: 860px) and (max-width: 1279px) {
+   générique ci-dessus.
+   PAS de condition (pointer: coarse) ici (retirée en v020) : le badge
+   diagnostic v019 a montré que le navigateur/WebView de cette tablette
+   déclare `pointer: coarse` à FALSE bien qu'il s'agisse d'un écran tactile —
+   du coup cette media query (et celle du repli portrait juste après) ne
+   s'activait JAMAIS, sur aucune orientation. C'est ce qui explique que le
+   verrou JS (v016) ET le repli CSS (v018) aient tous deux semblé sans effet :
+   le vrai coupable était cette condition, pas l'orientation en elle-même.
+   Le flag body[data-mode="kiosk"] (posé uniquement via ?kiosk=1) est déjà le
+   signal fiable pour "on est sur la borne" (cf. section Architecture) ; pas
+   besoin de pointer:coarse en plus. */
+@media (orientation: landscape) and (min-width: 860px) and (max-width: 1279px) {
   body[data-mode="kiosk"] .catalog {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
@@ -671,16 +681,16 @@ body[data-mode="kiosk"] .cmp-model { font-size: 20px; }
 
 /* ---- Repli si la borne repart en portrait malgré le verrou JS (22/09) ----
    screen.orientation.lock("landscape") (app.js) est best-effort et ne suffit
-   pas toujours sur cette borne : Christophe a confirmé que la grille repasse
-   encore à 2 colonnes après le correctif JS seul. Ce repli est purement CSS,
-   donc indépendant du support de l'API Screen Orientation par le WebView :
-   dès que le mode borne détecte un viewport tactile en portrait dans une
-   plage plausible pour cette tablette (mesuré 727×1291 le 22/09), toute la
-   page est pivotée visuellement à 90° pour se présenter en paysage. Les
-   éléments en position fixed (modales, plateau comparateur) suivent
-   automatiquement : un `transform` sur body[data-mode="kiosk"] en fait leur
-   bloc englobant. */
-@media (pointer: coarse) and (orientation: portrait) and (min-width: 500px) and (max-width: 900px) {
+   pas toujours sur cette borne. Ce repli est purement CSS, donc indépendant
+   du support de l'API Screen Orientation par le WebView : dès que le mode
+   borne détecte un viewport en portrait dans une plage plausible pour cette
+   tablette (mesuré 727×1291 le 22/09), toute la page est pivotée
+   visuellement à 90° pour se présenter en paysage. Les éléments en position
+   fixed (modales, plateau comparateur) suivent automatiquement : un
+   `transform` sur body[data-mode="kiosk"] en fait leur bloc englobant.
+   PAS de condition (pointer: coarse) (retirée en v020, même diagnostic que
+   la media query paysage juste au-dessus : cf. commentaire dessus). */
+@media (orientation: portrait) and (min-width: 500px) and (max-width: 900px) {
   body[data-mode="kiosk"] {
     position: fixed;
     top: 0;
