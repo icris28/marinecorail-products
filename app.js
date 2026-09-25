@@ -459,7 +459,7 @@
     const otherFamily = state.compare.length > 0 && vehicleById(state.compare[0]).family !== v.family;
     return `
 <article class="vehicle-card ${esc(v.brand)}" data-id="${esc(v.id)}">
-  <div class="vehicle-visual">${visualHTML(v)}</div>
+  <div class="vehicle-visual" data-detail="${esc(v.id)}" role="button" tabindex="0" aria-label="Voir la fiche ${esc(v.brandLabel + ' ' + v.model)}">${visualHTML(v)}</div>
   <div class="vehicle-body">
     <div class="vehicle-meta">
       <span class="brand-badge">${esc(v.brandLabel)}</span>
@@ -500,7 +500,14 @@
     $("#resultCount").textContent = rows.length
       ? `${rows.length} modèle${rows.length > 1 ? "s" : ""}`
       : "";
-    $$("[data-detail]", catalog).forEach(b => b.addEventListener("click", () => openDetail(b.dataset.detail)));
+    $$("[data-detail]", catalog).forEach(b => {
+      b.addEventListener("click", () => openDetail(b.dataset.detail));
+      if (b.tagName !== "BUTTON") {
+        b.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDetail(b.dataset.detail); }
+        });
+      }
+    });
     $$("[data-compare]", catalog).forEach(b => b.addEventListener("click", () => toggleCompare(b.dataset.compare)));
     $$("[data-color-pick]", catalog).forEach(b => b.addEventListener("click", () => {
       const [id, idx] = b.dataset.colorPick.split(":");
@@ -525,10 +532,13 @@
   </div>
 </section>`).join("");
 
+    const hasGallery = !!(v.gallery && v.gallery.length);
+
     $("#detailShell").className = `dialog-shell ${v.brand}`;
     $("#detailContent").innerHTML = `
-<div class="detail-head">
-  <div class="detail-visual ${(v.gallery && v.gallery.length) ? "has-gallery" : ""}">${galleryHTML(v) || visualHTML(v)}</div>
+${hasGallery ? `<div class="detail-gallery-wrap">${galleryHTML(v)}</div>` : ""}
+<div class="detail-head ${hasGallery ? "no-visual" : ""}">
+  ${hasGallery ? "" : `<div class="detail-visual">${visualHTML(v)}</div>`}
   <div>
     <span class="brand-badge">${esc(v.brandLabel)}</span>
     <h2 class="detail-title" id="detailTitle">${esc(v.model)}</h2>
