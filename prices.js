@@ -4,6 +4,10 @@
 // - { "from": <nombre> } : prix indicatif (affiche « À partir de X F CFP TTC »),
 //   pour les modèles fabriqués/livrés à la commande dont le tarif dépend de la
 //   motorisation/des options.
+// - { "public": <nombre>, "precommande": <nombre>, "discount": <pourcentage> } :
+//   prix public + prix spécial pré-commande (colonne M du tableur). N'est affiché
+//   en double sur le site que si le statut (inventory.js) du modèle est
+//   "precommande" ; sinon le prix public seul est utilisé (cf. priceHTML() dans app.js).
 // Fichier généré par tools/maj-prix.py à partir de _sources/tarifs-marine-corail.xlsx.
 
 window.MC_PRICES = {
@@ -27,10 +31,22 @@ window.MC_PRICES = {
   "seadoo-spark-trixx-3up-2024": 1495000,
   "canam-outlander-electric-2027": 2195000,
   "canam-outlander-max-electric-2027": 2295000,
-  "highfield-classic-260": 385000,
+  "highfield-classic-260": {
+    "public": 395000,
+    "precommande": 335750,
+    "discount": 15
+  },
   "highfield-classic-290": 415000,
-  "highfield-classic-310": 465000,
-  "highfield-classic-340": 545000,
+  "highfield-classic-310": {
+    "public": 480000,
+    "precommande": 408000,
+    "discount": 15
+  },
+  "highfield-classic-340": {
+    "public": 550000,
+    "precommande": 467500,
+    "discount": 15
+  },
   "highfield-classic-360": 499000,
   "highfield-classic-380-pvc": 585000,
   "highfield-classic-380-hypalon": 850000,
@@ -89,11 +105,31 @@ window.MC_PRICES = {
     "from": 14000000
   },
   "highfield-ultralite-220": null,
-  "highfield-ultralite-240": 259000,
-  "highfield-ultralite-260": 275000,
-  "highfield-ultralite-290": 325000,
-  "highfield-ultralite-310": 349000,
-  "highfield-ultralite-340": 425000,
+  "highfield-ultralite-240": {
+    "public": 290000,
+    "precommande": 246500,
+    "discount": 15
+  },
+  "highfield-ultralite-260": {
+    "public": 300000,
+    "precommande": 255000,
+    "discount": 15
+  },
+  "highfield-ultralite-290": {
+    "public": 330000,
+    "precommande": 280500,
+    "discount": 15
+  },
+  "highfield-ultralite-310": {
+    "public": 395000,
+    "precommande": 335750,
+    "discount": 15
+  },
+  "highfield-ultralite-340": {
+    "public": 440000,
+    "precommande": 374000,
+    "discount": 15
+  },
   "epropulsion-elite": 179995,
   "epropulsion-spirit-1-0-plus-extra-court": 235000,
   "epropulsion-spirit-1-0-evo-court": 335000,

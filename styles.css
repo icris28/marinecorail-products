@@ -310,6 +310,28 @@ body[data-tone="dark"] .mc-logo {
   color: var(--card-muted, var(--muted));
 }
 
+/* Prix double public / pré-commande (ex. Highfield Classic/Ultralite) :
+   même principe d'unités em que .price-approx-label ci-dessus, pour rester
+   cohérent sur les 3 contextes (carte .price, fiche .detail-price,
+   comparateur .cmp-price) sans dupliquer de règles par contexte. Le montant
+   spécial pré-commande reprend la taille normale du prix (c'est le montant
+   mis en avant) ; le prix public barré et le badge de remise sont en
+   retrait, juste en dessous. */
+.price-dual { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+.price-dual-special small {
+  font-size: .5em; font-weight: 700; margin-left: 4px; color: var(--card-muted, var(--muted));
+}
+.price-dual-compare { display: flex; align-items: center; gap: 8px; }
+.price-dual-old {
+  font-size: .42em; font-weight: 700; color: var(--card-muted, var(--muted));
+  text-decoration: line-through;
+}
+.price-dual-badge {
+  font-size: .38em; font-weight: 800; letter-spacing: .02em;
+  background: var(--precommande, #6b3fb5); color: #fff;
+  border-radius: 999px; padding: .3em .65em; white-space: nowrap;
+}
+
 .status {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em;

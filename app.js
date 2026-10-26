@@ -146,8 +146,29 @@
     // PRICES[id] est soit un nombre (prix ferme), soit null (prix sur
     // demande), soit { from: <nombre> } pour un prix indicatif "à partir de"
     // (modèles fabriqués/livrés à la commande dont le tarif dépend de la
-    // motorisation/des options).
+    // motorisation/des options), soit { public, precommande, discount } pour
+    // un modèle avec un tarif spécial pré-commande (colonne M du tableur
+    // tarifs — pour l'instant utilisé par certains modèles Highfield).
     const entry = PRICES[id];
+    const estDouble = entry != null && typeof entry === "object" && "precommande" in entry;
+    if (estDouble) {
+      // Le prix double (barré + spécial + remise) ne s'affiche que tant que
+      // le modèle est réellement en pré-commande (inventory.js) : s'il
+      // passe en stock/rupture/etc. sans que le tableur ait été nettoyé, on
+      // retombe simplement sur le prix public normal plutôt que de garder
+      // un tarif promo obsolète affiché.
+      if (inventoryOf(id).status === "precommande") {
+        const special = formatXPF(entry.precommande);
+        const public_ = formatXPF(entry.public);
+        return `<div class="${cls} price-dual">
+  <div class="price-dual-special">${esc(special)}<small>TTC pré-commande</small></div>
+  <div class="price-dual-compare"><span class="price-dual-old">${esc(public_)}</span><span class="price-dual-badge">-${entry.discount}%</span></div>
+</div>`;
+      }
+      const formatted = formatXPF(entry.public);
+      if (!formatted) return `<div class="${cls} na">Prix sur demande</div>`;
+      return `<div class="${cls}">${esc(formatted)}<small>TTC</small></div>`;
+    }
     const estApprox = entry != null && typeof entry === "object";
     const montant = estApprox ? entry.from : entry;
     const formatted = formatXPF(montant);
