@@ -808,5 +808,10 @@ ${state.diffOnly && hiddenCount ? `<p class="compare-note">${hiddenCount} ligne$
   injectBrandStyles();
   buildBrandTabs();
   buildSeatsFilter();
-  applyBrand("all");
+  // Lien direct vers un onglet marque (ex. index.html?marque=highfield),
+  // pour pouvoir envoyer les clients directement sur une marque plutôt que
+  // sur "Tous". Valeur ignorée silencieusement si elle ne correspond à
+  // aucun id de brands.js (retombe sur "all" comme avant).
+  const marqueInitiale = params.get("marque");
+  applyBrand(BRANDS.some(b => b.id === marqueInitiale) ? marqueInitiale : "all");
 })();

@@ -51,7 +51,7 @@ window.MC_INVENTORY = {
     "status": "precommande"
   },
   "seadoo-fishpro-sport-170-2026": {
-    "status": "stock",
+    "status": "precommande",
     "quantity": 1,
     "color": "White & Gulfstream Blue"
   },
@@ -79,7 +79,7 @@ window.MC_INVENTORY = {
     "status": "precommande"
   },
   "highfield-classic-290": {
-    "status": "precommande"
+    "status": "stock"
   },
   "highfield-classic-310": {
     "status": "precommande"
@@ -133,7 +133,7 @@ window.MC_INVENTORY = {
     "status": "commande"
   },
   "highfield-sport-300": {
-    "status": "rupture"
+    "status": "commande"
   },
   "highfield-sport-330": {
     "status": "commande"
@@ -154,7 +154,7 @@ window.MC_INVENTORY = {
     "status": "stock"
   },
   "highfield-sport-600": {
-    "status": "rupture"
+    "status": "commande"
   },
   "highfield-sport-660": {
     "status": "commande"
@@ -175,13 +175,13 @@ window.MC_INVENTORY = {
     "status": "stock"
   },
   "highfield-ultralite-260": {
-    "status": "stock"
+    "status": "precommande"
   },
   "highfield-ultralite-290": {
     "status": "precommande"
   },
   "highfield-ultralite-310": {
-    "status": "stock"
+    "status": "precommande"
   },
   "highfield-ultralite-340": {
     "status": "precommande"
@@ -208,7 +208,7 @@ window.MC_INVENTORY = {
     "status": "stock"
   },
   "highfield-rollup-250-al": {
-    "status": "stock"
+    "status": "precommande"
   },
   "highfield-rollup-250-kam": {
     "status": "stock"

@@ -26,7 +26,7 @@ window.MC_PRICES = {
   "seadoo-gtx-230-2027": 2795000,
   "seadoo-gtx-300-2027": null,
   "seadoo-wake-pro-230-2027": 2750000,
-  "seadoo-fishpro-sport-170-2026": 2850000,
+  "seadoo-fishpro-sport-170-2026": 2750000,
   "seadoo-gtx-pro-130-2026": 1995000,
   "seadoo-spark-trixx-3up-2024": 1495000,
   "canam-outlander-electric-2027": 2195000,
@@ -36,7 +36,7 @@ window.MC_PRICES = {
     "precommande": 335750,
     "discount": 15
   },
-  "highfield-classic-290": 415000,
+  "highfield-classic-290": 339000,
   "highfield-classic-310": {
     "public": 480000,
     "precommande": 408000,
@@ -49,7 +49,11 @@ window.MC_PRICES = {
   },
   "highfield-classic-360": 499000,
   "highfield-classic-380-pvc": 585000,
-  "highfield-classic-380-hypalon": 850000,
+  "highfield-classic-380-hypalon": {
+    "public": 640000,
+    "precommande": 544000,
+    "discount": 15
+  },
   "highfield-classic-400": 1250000,
   "highfield-classic-420": null,
   "highfield-classic-460": null,
@@ -106,9 +110,9 @@ window.MC_PRICES = {
   },
   "highfield-ultralite-220": null,
   "highfield-ultralite-240": {
-    "public": 290000,
+    "public": 259000,
     "precommande": 246500,
-    "discount": 15
+    "discount": 5
   },
   "highfield-ultralite-260": {
     "public": 300000,
@@ -141,8 +145,20 @@ window.MC_PRICES = {
   },
   "highfield-rollup-230-al": 139000,
   "highfield-rollup-230-kam": 139000,
-  "highfield-rollup-250-al": 155000,
+  "highfield-rollup-250-al": {
+    "public": 210000,
+    "precommande": 180000,
+    "discount": 14
+  },
   "highfield-rollup-250-kam": 155000,
-  "highfield-rollup-280-al": 225000,
-  "highfield-rollup-280-kam": 225000
+  "highfield-rollup-280-al": {
+    "public": 220000,
+    "precommande": 190000,
+    "discount": 14
+  },
+  "highfield-rollup-280-kam": {
+    "public": 220000,
+    "precommande": 190000,
+    "discount": 14
+  }
 };
